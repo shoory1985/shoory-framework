@@ -1,0 +1,12 @@
+#UAT环境
+spring:
+  profiles: 
+    include: uat-nacos, uat-redis
+  application:
+    name: gateway
+server: 
+  port: 8080
+snowflake: 
+  worker-id: 0
+  datacenter-id: 1
+    

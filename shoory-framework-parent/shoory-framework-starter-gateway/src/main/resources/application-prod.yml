@@ -1,0 +1,11 @@
+#PROD环境
+spring:
+  profiles: 
+    include: prod-nacos, prod-redis
+  application: 
+    name: gateway
+server: 
+  port: 8080
+snowflake: 
+  worker-id: 0
+  datacenter-id: 2
