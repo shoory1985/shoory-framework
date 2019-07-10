@@ -1,0 +1,17 @@
+#开发环境
+spring:
+  profiles: 
+    include: dev-nacos, dev-redis
+  application: 
+    name: gateway-token
+  cloud: 
+    inetutils: 
+      preferred-networks: 10.
+    loadbalancer: 
+      retry: 
+        enabled: true
+server: 
+  port: 9001
+snowflake: 
+  worker-id: 0
+  datacenter-id: 0

@@ -1,0 +1,11 @@
+#UAT环境
+spring: 
+  profiles: 
+    include: uat-eureka
+  application:
+    name: eureka
+  cloud: 
+    inetutils: 
+      preferred-networks: 10.
+server:  
+  port: 8761
