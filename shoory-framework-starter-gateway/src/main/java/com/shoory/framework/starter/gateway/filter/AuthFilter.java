@@ -63,9 +63,9 @@ public class AuthFilter implements GlobalFilter, Ordered {
 			if (pieces.length < 3) {
 				// 节数不够
 				return this.forbidden(exchange.getResponse(), ERROR_FORBIDDEN);
-			} else if (pieces[2].equals("pub")) {
+			} else if (pieces[2].startsWith("pub")) {
 				// pub放行
-			} else if (pieces[2].equals("sys")) {
+			} else if (pieces[2].startsWith("sys")) {
 				// sys拦截
 				return this.forbidden(exchange.getResponse(), ERROR_FORBIDDEN);
 			} else {
@@ -124,9 +124,6 @@ public class AuthFilter implements GlobalFilter, Ordered {
 		        		.build();
 				return chain.filter(exchange.mutate().request(newRequest).build());
 			}
-
-			//request.getHeaders().add("ClientAddress", request.getRemoteAddress().getAddress().getHostAddress());
-
 		}
 		}
 
