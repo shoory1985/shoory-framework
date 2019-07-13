@@ -27,10 +27,6 @@ public class GatewayApplication {
             DiscoveryClient discoveryClient, DiscoveryLocatorProperties properties) {
         return new DiscoveryClientRouteDefinitionLocator(discoveryClient, properties);
     }
-    @Bean
-    public RetryGatewayFilterFactory retryGatewayFilterFactory() {
-        return new RetryGatewayFilterFactory();
-    }
   
 	public static void main(String[] args) {
 		SpringApplication.run(GatewayApplication.class, args);
