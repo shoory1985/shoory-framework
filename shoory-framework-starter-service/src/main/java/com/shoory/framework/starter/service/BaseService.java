@@ -10,16 +10,10 @@ public abstract class BaseService<IN extends BaseRequest, OUT extends BaseRespon
 	private Class<OUT> responseClass;
 
 	public Class<IN> requestClass() {
-		return requestClass;
+		return requestClass != null ? requestClass : (requestClass = (Class<IN>)((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
 	}
 	public Class<OUT> responseClass() {
-		return responseClass;
-	}
-
-	BaseService() {
-		ParameterizedType ptype = (ParameterizedType) this.getClass().getGenericSuperclass();
-		requestClass = (Class<IN>)ptype.getActualTypeArguments()[0];
-		responseClass = (Class<OUT>)ptype.getActualTypeArguments()[1];
+		return responseClass != null ? responseClass : (responseClass = (Class<OUT>)((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
 	}
 	
 	public abstract OUT invoke(IN request);
