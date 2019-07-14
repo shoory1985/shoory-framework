@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.alibaba.nacos.client.utils.StringUtils;
 import com.shoory.framework.starter.api.annotation.ApiDescription;
+import com.shoory.framework.starter.api.annotation.ApiModule;
 import com.shoory.framework.starter.api.annotation.ApiName;
 import com.shoory.framework.starter.api.annotation.ApiReturn;
 import com.shoory.framework.starter.api.annotation.ApiReturns;
@@ -24,12 +25,11 @@ public class MethodUtils {
 		
 		Optional.ofNullable(method.getAnnotation(PostMapping.class)).ifPresent(postMapping -> {
 			//方法
-			ret.setMethod(String.join(",", postMapping.value()));
+			ret.setMethod(method.getName());
 			//模块
-			Arrays.stream(ret.getMethod().split("/"))
-				.filter(piece -> StringUtils.isNotBlank(piece))
-				.findFirst()
-				.ifPresent(piece -> ret.setModule(piece));
+			Optional.ofNullable(method.getAnnotation(ApiModule.class)).ifPresent(apiModule -> {
+				ret.setDescription(apiModule.value());
+			});
 			//方法名
 			Optional.ofNullable(method.getAnnotation(ApiName.class)).ifPresent(apiName -> {
 				ret.setName(apiName.value());
@@ -44,7 +44,7 @@ public class MethodUtils {
 				.map(p -> p.getType())
 				.ifPresent(classRequest -> ret.setRequestFields(FieldUtils.getList(classRequest, false)));
 
-			// 出参
+			//出参
 			Optional.ofNullable(method.getReturnType())
 				.ifPresent(classResponse -> ret.setResponseFields(FieldUtils.getList(classResponse, true)));
 			

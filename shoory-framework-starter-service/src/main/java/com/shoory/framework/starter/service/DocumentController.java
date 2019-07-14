@@ -11,13 +11,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
+import com.shoory.framework.starter.api.ApiInfo;
 import com.shoory.framework.starter.service.document.MethodInfos;
 import com.shoory.framework.starter.service.document.ServiceInfos;
 import com.shoory.framework.starter.service.document.utils.ServiceUtils;
@@ -27,7 +31,7 @@ import com.shoory.framework.starter.utils.PojoUtils;
 @CrossOrigin
 public class DocumentController {
 	@Autowired(required = false)
-	private Class apiClass;
+	private ApiInfo apiInfo;
 	@Value("${spring.profiles.active}")
 	private String springProfileActive;
 	@Autowired
@@ -36,32 +40,36 @@ public class DocumentController {
 	private ServiceInfos serviceInfo;
 	private Map<String, MethodInfos> methodInfos;
 	
-	@RequestMapping(value = "/**", method = RequestMethod.GET, produces = "application/json")
-	public String document(HttpServletRequest request, HttpServletResponse response) {
-		if (apiClass == null || "prod".equalsIgnoreCase(springProfileActive)) {
+	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public String serviceInfo(HttpServletRequest request, HttpServletResponse response) {
+		if (!this.check()) {
 			return "{}";
 		}
-	
-		if (serviceInfo == null) {
-			//初始化
-			serviceInfo = ServiceUtils.getInfo(apiClass);
-			methodInfos = ServiceUtils.getMethodInfos(apiClass, serviceInfo);
-		}
-		
-
-		String path = request.getRequestURI();
-		if (path.equals("/")) {
-			return pojoUtils.toJson(serviceInfo);
-		} else {
-			MethodInfos methodInfo = methodInfos.get(path);
-			if (methodInfo != null) {
-				return pojoUtils.toJson(methodInfo);
-			}
-		}
-		
-		return "{}";
+		return pojoUtils.toJson(serviceInfo);
 	}
 	
+	@GetMapping(value = "/{methodName}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public String methodInfo(@PathVariable("methodName") String methodName, HttpServletRequest request, HttpServletResponse response) {
+		if (!this.check()) {
+			return "{}";
+		}
+
+		MethodInfos methodInfo = methodInfos.get(methodName);
+		if (methodInfo == null) {
+			return "{}";
+		}
+		
+		return pojoUtils.toJson(methodInfo);
+	}
+	
+	private boolean check() {
+		return apiInfo != null 
+				&& apiInfo.getApiClass() != null
+				&& "prod".equalsIgnoreCase(springProfileActive)
+				&& (serviceInfo != null || (serviceInfo = ServiceUtils.getInfo(apiInfo.getApiClass())) != null)
+				&& (methodInfos != null || (methodInfos = ServiceUtils.getMethodInfos(apiInfo.getApiClass(), serviceInfo)) != null);
+	}
+
 	@Bean
 	public SimpleUrlHandlerMapping StaticHandlerMapping(ResourceHttpRequestHandler handler) {
 		SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
