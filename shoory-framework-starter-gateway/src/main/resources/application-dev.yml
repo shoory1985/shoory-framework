@@ -1,9 +1,13 @@
 #开发环境
 spring:
   profiles: 
-    include: dev-nacos, dev-redis
+    include: dev-redis
   application: 
     name: gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
 server: 
   port: 8080
 snowflake: 

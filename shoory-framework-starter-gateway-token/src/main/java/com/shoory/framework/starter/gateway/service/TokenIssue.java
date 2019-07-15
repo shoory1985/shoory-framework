@@ -14,8 +14,8 @@ import com.shoory.framework.starter.gateway.document.GatewaySessions;
 import com.shoory.framework.starter.gateway.repository.GatewaySessionRepository;
 import com.shoory.framework.starter.service.BaseService;
 
-@Service("token/issue")
-public class TokenIssueImpl extends BaseService<TokenIssueRequest, TokenIssueResponse> {
+@Service
+public class TokenIssue extends BaseService<TokenIssueRequest, TokenIssueResponse> {
 
 	@Autowired
 	private GatewaySessionRepository gatewaySessionRepository;

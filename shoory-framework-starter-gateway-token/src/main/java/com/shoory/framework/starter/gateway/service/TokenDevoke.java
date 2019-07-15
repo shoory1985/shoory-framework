@@ -16,8 +16,8 @@ import com.shoory.framework.starter.gateway.document.GatewaySessions;
 import com.shoory.framework.starter.gateway.repository.GatewaySessionRepository;
 import com.shoory.framework.starter.service.BaseService;
 
-@Service("token/devoke")
-public class TokenDevokeImpl extends BaseService<TokenDevokeRequest, TokenDevokeResponse> {
+@Service
+public class TokenDevoke extends BaseService<TokenDevokeRequest, TokenDevokeResponse> {
 	@Autowired
 	private GatewaySessionRepository gatewaySessionRepository;
 	

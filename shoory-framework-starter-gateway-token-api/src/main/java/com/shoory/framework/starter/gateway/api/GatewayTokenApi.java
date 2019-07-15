@@ -16,15 +16,15 @@ import com.shoory.framework.starter.gateway.api.response.TokenRefreshResponse;
 public interface GatewayTokenApi {
 
 	@ApiName("令牌吊销")
-	@PostMapping(value = "/token/devoke", produces = "application/json")
+	@PostMapping(value = "/tokenDevoke", produces = "application/json")
 	public TokenDevokeResponse tokenDevoke(TokenDevokeRequest request);
 
 	@ApiName("令牌颁发")
-	@PostMapping(value = "/token/refresh", produces = "application/json")
+	@PostMapping(value = "/tokenRefresh", produces = "application/json")
 	public TokenRefreshResponse tokenRefresh(TokenRefreshRequest request);
 
 	@ApiName("令牌刷新")
-	@PostMapping(value = "/token/issue", produces = "application/json")
+	@PostMapping(value = "/tokenIssue", produces = "application/json")
 	public TokenIssueResponse tokenIssue(TokenIssueRequest request);
 
 }

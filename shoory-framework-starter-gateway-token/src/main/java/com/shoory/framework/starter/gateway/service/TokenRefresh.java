@@ -8,8 +8,8 @@ import com.shoory.framework.starter.gateway.api.request.TokenRefreshRequest;
 import com.shoory.framework.starter.gateway.api.response.TokenRefreshResponse;
 import com.shoory.framework.starter.service.BaseService;
 
-@Service("token/refresh")
-public class TokenRefreshImpl extends BaseService<TokenRefreshRequest, TokenRefreshResponse> {
+@Service
+public class TokenRefresh extends BaseService<TokenRefreshRequest, TokenRefreshResponse> {
 	
 	@Override
 	public TokenRefreshResponse invoke(@Valid TokenRefreshRequest request) {
