@@ -71,7 +71,7 @@ public class MethodRouter {
 	
 	
 	private BaseService getMethod(String methodName) {
-		Object method = SpringUtil.getBean(methodName.toLowerCase());
+		Object method = SpringUtil.getBean(methodName);
 		// 检查类型
 		if (method == null || !(method instanceof BaseService)) {
 			// 没找到对应的接口
