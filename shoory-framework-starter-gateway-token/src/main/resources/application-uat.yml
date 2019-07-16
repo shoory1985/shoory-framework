@@ -1,0 +1,13 @@
+#开发环境
+spring:
+  profiles: 
+    include: redis
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+server: 
+  port: 8081
+snowflake: 
+  worker-id: 0
+  datacenter-id: 0
