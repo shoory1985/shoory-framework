@@ -2,10 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>gateway</artifactId>
+	<artifactId>shoory-framework-gateway</artifactId>
 	<packaging>jar</packaging>
 
-	<name>gateway</name>
+	<name>shoory-framework-gateway</name>
 	<url>http://maven.apache.org</url>
 
 	<parent>
@@ -85,7 +85,6 @@
 				<version>${docker-maven-plugin.version}</version>
 				<configuration>
 					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-					<dockerDirectory>src/main/docker</dockerDirectory>
 					<registryUrl>http://${docker.image.prefix}</registryUrl>
 					<pushImage>true</pushImage>
 					<dockerHost>http://127.0.0.1:2375</dockerHost>
