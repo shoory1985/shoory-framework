@@ -3,10 +3,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>shoory-framework-gateway-token</artifactId>
+	<artifactId>gateway-token</artifactId>
 	<packaging>jar</packaging>
 
-	<name>shoory-framework-gateway-token</name>
+	<name>gateway-token</name>
 	<url>http://maven.apache.org</url>
 
 	<parent>
