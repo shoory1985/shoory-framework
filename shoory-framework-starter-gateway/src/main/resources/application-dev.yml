@@ -2,8 +2,6 @@
 spring:
   profiles: 
     include: dev-redis
-  application: 
-    name: gateway
   cloud:
     nacos:
       discovery:
