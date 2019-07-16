@@ -85,6 +85,7 @@
 				<version>${docker-maven-plugin.version}</version>
 				<configuration>
 					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+					<dockerDirectory>src/main/docker</dockerDirectory>
 					<registryUrl>http://${docker.image.prefix}</registryUrl>
 					<pushImage>true</pushImage>
 					<dockerHost>http://127.0.0.1:2375</dockerHost>
