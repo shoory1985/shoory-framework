@@ -1,5 +1,6 @@
 package com.shoory.framework.starter;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +13,7 @@ import org.springframework.retry.annotation.EnableRetry;
 
 import com.shoory.framework.starter.api.ApiInfo;
 import com.shoory.framework.starter.gateway.api.GatewayTokenApi;
+import com.shoory.framework.starter.service.SpringUtil;
 
 @SpringBootApplication
 @ComponentScan
@@ -24,7 +26,11 @@ public class GatewayTokenApplication {
 		return new ApiInfo(GatewayTokenApi.class, new Class<?>[] {});
 	}
 	
+	
 	public static void main(String[] args) {
 		SpringApplication.run(GatewayTokenApplication.class, args);
+		
+		XX xx = SpringUtil.getBean(XX.class);
+		xx.log();
 	}
 } 
