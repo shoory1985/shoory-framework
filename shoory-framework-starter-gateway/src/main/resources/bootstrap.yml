@@ -1,4 +1,8 @@
-spring:  
+spring:
+  application:
+    name: gateway
+  profiles:
+    active: dev
   cloud:
     nacos:
       config:

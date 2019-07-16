@@ -32,7 +32,7 @@ import com.shoory.framework.starter.utils.PojoUtils;
 public class DocumentController {
 	@Autowired(required = false)
 	private ApiInfo apiInfo;
-	@Value("${spring.profiles.active}")
+	@Value("${spring.profiles.active:dev}")
 	private String springProfileActive;
 	@Autowired
 	private PojoUtils pojoUtils;
