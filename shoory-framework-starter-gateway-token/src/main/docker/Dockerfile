@@ -7,7 +7,7 @@ ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS \
 ADD *.jar gateway-token.jar
 
 CMD echo "The Gateway application will start " && \
-	java ${JAVA_OPTS} -jar /gateway-token.jar --spring.cloud.nacos.config.server-addr=nacos:8848
+	java ${JAVA_OPTS} -jar /gateway-token.jar ${SPRING_OPTIONS}
 	
 EXPOSE 8080
 	
