@@ -35,14 +35,4 @@ public class TokenDevoke extends BaseService<TokenDevokeRequest, TokenDevokeResp
 		return response;
 	}
 
-	@Override
-	public Class<TokenDevokeRequest> requestClass() {
-		return TokenDevokeRequest.class;
-	}
-
-	@Override
-	public Class<TokenDevokeResponse> responseClass() {
-		return TokenDevokeResponse.class;
-	}
-
 }

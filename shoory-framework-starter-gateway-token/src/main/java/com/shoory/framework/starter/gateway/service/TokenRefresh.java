@@ -18,15 +18,5 @@ public class TokenRefresh extends BaseService<TokenRefreshRequest, TokenRefreshR
 		return response;
 	}
 
-	@Override
-	public Class<TokenRefreshRequest> requestClass() {
-		return TokenRefreshRequest.class;
-	}
-
-	@Override
-	public Class<TokenRefreshResponse> responseClass() {
-		return TokenRefreshResponse.class;
-	}
-
 
 }

@@ -11,7 +11,7 @@ import com.shoory.framework.starter.gateway.api.response.TokenDevokeResponse;
 import com.shoory.framework.starter.gateway.api.response.TokenIssueResponse;
 import com.shoory.framework.starter.gateway.api.response.TokenRefreshResponse;
 
-@ApiName("令牌吊销")
+@ApiName("网关令牌服务")
 @FeignClient("gateway-token")
 public interface GatewayTokenApi {
 

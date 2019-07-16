@@ -49,15 +49,6 @@ public class TokenIssue extends BaseService<TokenIssueRequest, TokenIssueRespons
 		return response;
 	}
 
-	@Override
-	public Class<TokenIssueRequest> requestClass() {
-		return TokenIssueRequest.class;
-	}
-
-	@Override
-	public Class<TokenIssueResponse> responseClass() {
-		return TokenIssueResponse.class;
-	}
 
 
 }
