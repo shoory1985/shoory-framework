@@ -45,10 +45,9 @@
 		
 		<dependency>
 			<groupId>com.shoory.framework</groupId>
-			<artifactId>shoory-framework-starter-gateway-common</artifactId>
+			<artifactId>shoory-framework-starter-redis</artifactId>
 			<version>${shoory-framework.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.apache.directory.studio</groupId>
 			<artifactId>org.apache.commons.codec</artifactId>

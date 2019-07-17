@@ -29,8 +29,5 @@ public class GatewayTokenApplication {
 	
 	public static void main(String[] args) {
 		SpringApplication.run(GatewayTokenApplication.class, args);
-		
-		XX xx = SpringUtil.getBean(XX.class);
-		xx.log();
 	}
 } 

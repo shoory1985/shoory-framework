@@ -10,4 +10,3 @@ CMD echo "The Gateway application will start " && \
 	java ${JAVA_OPTS} -jar /gateway-token.jar ${SPRING_OPTIONS}
 	
 EXPOSE 8080
-	
