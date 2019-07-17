@@ -25,9 +25,6 @@
 		<module>shoory-framework-starter-wechat</module>
 		<module>shoory-framework-starter-wechatmp</module>
 		<module>shoory-framework-starter-gateway-token-api</module>
-		<module>shoory-framework-starter-gateway-common</module>
-		<module>shoory-framework-starter-gateway</module>
-		<module>shoory-framework-starter-gateway-token</module>
 	</modules>
 
 	<properties>
