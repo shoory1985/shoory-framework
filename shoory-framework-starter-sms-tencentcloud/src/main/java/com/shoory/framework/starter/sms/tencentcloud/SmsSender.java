@@ -1,4 +1,4 @@
-package com.shoory.framework.starter.sms;
+package com.shoory.framework.starter.sms.tencentcloud;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -17,9 +17,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import com.shoory.framework.starter.sms.qcloud.PojoSmsMsg;
-import com.shoory.framework.starter.sms.qcloud.PojoTel;
-import com.shoory.framework.starter.sms.qcloud.PojoVoiceMsg;
+import com.shoory.framework.starter.sms.tencentcloud.qcloud.PojoSmsMsg;
+import com.shoory.framework.starter.sms.tencentcloud.qcloud.PojoTel;
+import com.shoory.framework.starter.sms.tencentcloud.qcloud.PojoVoiceMsg;
 import com.shoory.framework.starter.utils.PojoUtils;
 
 @Component

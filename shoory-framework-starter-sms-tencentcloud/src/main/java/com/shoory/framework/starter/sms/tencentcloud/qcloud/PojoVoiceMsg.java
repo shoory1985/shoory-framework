@@ -1,4 +1,4 @@
-package com.shoory.framework.starter.sms.qcloud;
+package com.shoory.framework.starter.sms.tencentcloud.qcloud;
 
 import java.util.List;
 

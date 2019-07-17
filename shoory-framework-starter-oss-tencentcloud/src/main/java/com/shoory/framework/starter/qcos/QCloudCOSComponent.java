@@ -14,6 +14,7 @@ import com.qcloud.cos.model.COSObject;
 import com.qcloud.cos.model.ObjectMetadata;
 import com.qcloud.cos.model.PutObjectRequest;
 import com.qcloud.cos.model.PutObjectResult;
+import com.shoory.framework.starter.oss.OssComponent;
 import com.shoory.framework.starter.utils.DateUtils;
 
 @Component

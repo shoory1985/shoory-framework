@@ -17,11 +17,13 @@
 		<module>shoory-framework-starter-captcha</module>
 		<module>shoory-framework-starter-db</module>
 		<module>shoory-framework-starter-email</module>
-		<module>shoory-framework-starter-qcos</module>
+		<module>shoory-framework-starter-oss</module>
+		<module>shoory-framework-starter-oss-tencentcloud</module>
 		<module>shoory-framework-starter-redis</module>
 		<module>shoory-framework-starter-service</module>
 		<module>shoory-framework-starter-service-document</module>
 		<module>shoory-framework-starter-sms</module>
+		<module>shoory-framework-starter-sms-tencentcloud</module>
 		<module>shoory-framework-starter-utils</module>
 		<module>shoory-framework-starter-wechat</module>
 		<module>shoory-framework-starter-wechatmp</module>

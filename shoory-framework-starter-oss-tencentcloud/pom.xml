@@ -3,10 +3,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>shoory-framework-starter-qcos</artifactId>
+	<artifactId>shoory-framework-starter-oss-tencentcloud</artifactId>
 	<packaging>jar</packaging>
 
-	<name>shoory-framework-starter-qcos</name>
+	<name>shoory-framework-starter-oss-tencentcloud</name>
 	<url>http://maven.apache.org</url>
 
 	<parent>
@@ -27,10 +27,14 @@
 			<version>${shoory-framework.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>com.shoory.framework</groupId>
+			<artifactId>shoory-framework-starter-oss</artifactId>
+			<version>${shoory-framework.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>com.qcloud</groupId>
 			<artifactId>cos_api</artifactId>
 			<version>5.4.6</version>
 		</dependency>
-
 	</dependencies>
 </project>
