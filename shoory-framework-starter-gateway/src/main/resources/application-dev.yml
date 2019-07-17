@@ -1,6 +1,6 @@
 spring:
   profiles:
-    include: redis
+    include: redis-dev
   cloud:
     nacos:
       discovery:
