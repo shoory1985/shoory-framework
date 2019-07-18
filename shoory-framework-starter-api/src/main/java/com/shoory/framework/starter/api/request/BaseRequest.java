@@ -24,7 +24,7 @@ public class BaseRequest implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@ApiName("语言")
-	private String lang;
+	private String lang = "zh_CN";
 	
 	@ApiHidden
 	private String _clientAddress;
