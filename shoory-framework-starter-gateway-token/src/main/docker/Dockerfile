@@ -6,7 +6,7 @@ ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS \
     
 ADD *.jar app.jar
 
-CMD echo "The Gateway application will start " && \
+CMD echo "The application will start " && \
 	java ${JAVA_OPTS} -jar /app.jar ${SPRING_OPTIONS}
 	
 EXPOSE 8080
