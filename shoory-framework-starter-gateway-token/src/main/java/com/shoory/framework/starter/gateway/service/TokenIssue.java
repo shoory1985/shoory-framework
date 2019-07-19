@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.shoory.framework.starter.gateway.api.request.TokenIssueRequest;
@@ -20,8 +21,14 @@ public class TokenIssue extends BaseService<TokenIssueRequest, TokenIssueRespons
 	@Autowired
 	private GatewaySessionRepository gatewaySessionRepository;
 
+	@Value("${spring.redis.password}")
+	private String password;
+	
 	@Override
 	public TokenIssueResponse invoke(TokenIssueRequest request) {
+		System.out.println("=========="+password+"===========");
+		
+		
 		// 作废旧的
 		{
 			List<GatewaySessions> list = gatewaySessionRepository.findByCredential(request.getCredential());
