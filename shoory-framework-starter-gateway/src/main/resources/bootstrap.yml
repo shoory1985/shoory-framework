@@ -3,7 +3,6 @@ spring:
     name: gateway
   profiles:
     active: dev
-    include: redis
   cloud:
     nacos:
       config:
