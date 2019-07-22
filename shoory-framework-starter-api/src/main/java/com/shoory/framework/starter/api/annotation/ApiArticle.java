@@ -7,5 +7,6 @@ import java.lang.annotation.RetentionPolicy;
 @Repeatable(ApiArticles.class)
 @Retention(RetentionPolicy.RUNTIME) 
 public @interface ApiArticle {
-	public Class value();
+	public String link();
+	public String title() default "";
 }
