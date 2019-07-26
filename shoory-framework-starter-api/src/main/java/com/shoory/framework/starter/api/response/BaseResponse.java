@@ -34,15 +34,12 @@ public class BaseResponse implements Serializable {
 	private String code = "ERROR_UNKNOWN";
 
 	@ApiName("响应消息")
-	@ApiRequired
-	@ApiDescription("成功为空串，否则为其他值")
-	private String message = "未知错误";
+	private String message;
 
 	public void setResult(Resultable resultable, String lang) {
 		this.code = resultable.getCode();
 		this.message = resultable.getMessage(lang);
 	}
-
 
 	public boolean isSuccess() {
 		return code != null && code.trim().equals("SUCCESS");

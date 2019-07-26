@@ -49,6 +49,10 @@ public class DocumentController {
 		}
 		return pojoUtils.toJson(serviceInfo);
 	}
+	@GetMapping(value = "/i18n", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public String methodInfo(HttpServletRequest request, HttpServletResponse response) {
+		return pojoUtils.toJson(i18nComponent.getMessages());
+	}
 	
 	@GetMapping(value = "/{methodName}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public String methodInfo(@PathVariable("methodName") String methodName, HttpServletRequest request, HttpServletResponse response) {

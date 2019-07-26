@@ -77,7 +77,7 @@ public class MethodRouter {
 		// 检查类型
 		if (method == null || !(method instanceof BaseService)) {
 			// 没找到对应的接口
-			throw new BizException(BaseResult.ERROR_METHOD_NOT_FOUND);
+			throw new BizException(BaseResult.ERROR_METHOD_NOT_FOUND.toString());
 		} else {
 			return (BaseService)method;
 		}
@@ -134,7 +134,7 @@ public class MethodRouter {
 				for (numAttempts = 0; numAttempts <= maxRetries; numAttempts++) {
 					try {
 						response = method.invoke(request);
-						response.setResult(BaseResult.SUCCESS, request.getLang());
+						response.setCode("SUCCESS");;
 						break;
 					} catch (Throwable ex) { // 乐观锁
 						if (ex.getClass().getSimpleName().indexOf("PessimisticLockingFailureExceptionException") >= 0) {
@@ -146,7 +146,7 @@ public class MethodRouter {
 				}
 			} catch (BizException be) {
 				response = new BaseResponse();
-				response.setCode(be.getResult().getCode());
+				response.setCode(be.getMessage());
 			} catch (Throwable e) {
 				response = new BaseResponse();
 				response.setCode(BaseResult.ERROR_INTERNAL.getCode());

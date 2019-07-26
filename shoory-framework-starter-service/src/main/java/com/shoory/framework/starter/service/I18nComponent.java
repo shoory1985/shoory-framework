@@ -67,4 +67,8 @@ public class I18nComponent {
 		return prop;
 	}
 
+	public Hashtable<String, Properties> getMessages() {
+		return messages;
+	}
+
 }
