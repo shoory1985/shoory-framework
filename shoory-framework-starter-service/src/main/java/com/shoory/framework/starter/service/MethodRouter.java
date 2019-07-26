@@ -23,6 +23,8 @@ public class MethodRouter {
 	private static final Logger logger = LoggerFactory.getLogger(MethodRouter.class);
 	@Autowired
 	private PojoUtils pojoUtils;
+	@Autowired
+	private I18nComponent i18nComponent;
 
 	public String jsonInvoke(String methodName, String json) {
 		try {
@@ -145,7 +147,6 @@ public class MethodRouter {
 			} catch (BizException be) {
 				response = new BaseResponse();
 				response.setCode(be.getResult().getCode());
-				response.setMessage(be.getResult().getMessage(request.getLang()));
 			} catch (Throwable e) {
 				response = new BaseResponse();
 				response.setCode(BaseResult.ERROR_INTERNAL.getCode());
@@ -154,6 +155,12 @@ public class MethodRouter {
 			}
 
 			// 调用完成
+			
+			//i18n
+			if (response.getMessage() == null) {
+				response.setMessage(i18nComponent.getMessage(response.getCode(), request.getLang()));
+			}
+			
 			return response;
 		} catch (SysException se) {
 			BaseResponse response = new BaseResponse();

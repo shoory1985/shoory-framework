@@ -76,18 +76,27 @@ public class PojoUtils {
 		return null;
 	}
 
-	public <T> String validateMessage(T t) {
+	public <T> String validateAll(T t) {
 		return Optional.ofNullable(validator.validate(t)
+					.stream()
+					.map(ConstraintViolation::getMessage)
+					.collect(Collectors.joining(";"))
+				)
+				.orElse("");
+	}
+
+	public <T> String validateOne(T t) {
+		return validator.validate(t)
 				.stream()
+				.findFirst()
 				.map(ConstraintViolation::getMessage)
-				.collect(Collectors.joining(";")))
 				.orElse("");
 	}
 
 	public <T> void validate(T t) {
-		Optional.ofNullable(validateMessage(t))
+		Optional.ofNullable(validateOne(t))
 			.filter(message -> !message.isEmpty())
-			.ifPresent(message -> {throw new SysException("ERROR_INVALID_PARAMETERS", message);});
+			.ifPresent(message -> {throw new SysException(message, null);});
 	}
 
 	public <T> T getOne(List<T> list) {

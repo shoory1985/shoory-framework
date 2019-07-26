@@ -36,6 +36,8 @@ public class DocumentController {
 	private String springProfileActive;
 	@Autowired
 	private PojoUtils pojoUtils;
+	@Autowired
+	private I18nComponent i18nComponent;
 
 	private ServiceInfos serviceInfo;
 	private Map<String, MethodInfos> methodInfos;
