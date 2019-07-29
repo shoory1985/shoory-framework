@@ -96,7 +96,7 @@ public class PojoUtils {
 	public <T> void validate(T t) {
 		Optional.ofNullable(validateOne(t))
 			.filter(message -> !message.isEmpty())
-			.ifPresent(message -> {throw new SysException(message, null);});
+			.ifPresent(message -> {throw new BizException(message);});
 	}
 
 	public <T> T getOne(List<T> list) {

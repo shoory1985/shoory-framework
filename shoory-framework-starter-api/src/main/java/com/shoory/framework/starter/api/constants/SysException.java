@@ -9,7 +9,7 @@ public class SysException extends RuntimeException {
 	private String message;
 
 	public SysException(String code, String message) {
-		super(code, null, false, false);
+		super(code);
 		this.code = code;
 		this.message = message;
 	}
