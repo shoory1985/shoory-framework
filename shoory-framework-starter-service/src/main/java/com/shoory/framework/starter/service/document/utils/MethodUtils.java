@@ -13,8 +13,6 @@ import com.alibaba.nacos.client.utils.StringUtils;
 import com.shoory.framework.starter.api.annotation.ApiDescription;
 import com.shoory.framework.starter.api.annotation.ApiModule;
 import com.shoory.framework.starter.api.annotation.ApiName;
-import com.shoory.framework.starter.api.annotation.ApiReturn;
-import com.shoory.framework.starter.api.annotation.ApiReturns;
 import com.shoory.framework.starter.service.document.MethodInfos;
 import com.shoory.framework.starter.service.document.ReturnInfos;
 
@@ -49,7 +47,7 @@ public class MethodUtils {
 				.ifPresent(classResponse -> ret.setResponseFields(FieldUtils.getList(classResponse, true)));
 			
 			//结果
-			List<ReturnInfos> returns = new ArrayList<ReturnInfos>();
+			/*List<ReturnInfos> returns = new ArrayList<ReturnInfos>();
 			returns.add(new ReturnInfos("SUCCESS", "", "调用成功"));
 			Arrays.stream(method.getAnnotationsByType(ApiReturn.class))
 				.sorted()
@@ -57,6 +55,7 @@ public class MethodUtils {
 			returns.add(new ReturnInfos("ERROR_INTERNAL", "(异常名称)", "发生内部异常"));
 			returns.add(new ReturnInfos("ERROR_UNKNOWN", "未知错误", "请与开发者联系"));
 			ret.setReturns(returns.toArray(new ReturnInfos[returns.size()]));
+			*/
 		});
 
 		return ret;
