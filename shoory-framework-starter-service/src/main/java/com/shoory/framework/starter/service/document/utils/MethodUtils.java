@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -18,7 +19,11 @@ import com.shoory.framework.starter.service.document.ReturnInfos;
 
 @Component
 public class MethodUtils {
-	public static MethodInfos getInfo(Method method) {
+	
+	@Autowired
+	private FieldUtils fieldUtils;
+	
+	public  MethodInfos getInfo(Method method) {
 		MethodInfos ret = new MethodInfos();
 		
 		Optional.ofNullable(method.getAnnotation(PostMapping.class)).ifPresent(postMapping -> {
@@ -40,11 +45,15 @@ public class MethodUtils {
 			Arrays.stream(method.getParameters())
 				.findFirst()
 				.map(p -> p.getType())
-				.ifPresent(classRequest -> ret.setRequestFields(FieldUtils.getList(classRequest, false)));
+				.ifPresent(classRequest ->{ 
+					ret.setRequestFields(fieldUtils.getList(classRequest, false));
+					ret.setReturns(fieldUtils.getList(classRequest));
+				});
 
 			//出参
 			Optional.ofNullable(method.getReturnType())
-				.ifPresent(classResponse -> ret.setResponseFields(FieldUtils.getList(classResponse, true)));
+				.ifPresent(classResponse -> ret.setResponseFields(fieldUtils.getList(classResponse, true)));
+			
 			
 			//结果
 			/*List<ReturnInfos> returns = new ArrayList<ReturnInfos>();

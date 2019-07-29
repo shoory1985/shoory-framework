@@ -9,15 +9,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Component;
+
 import com.shoory.framework.starter.api.annotation.ApiDescription;
 import com.shoory.framework.starter.api.annotation.ApiName;
 import com.shoory.framework.starter.service.document.MethodInfos;
 import com.shoory.framework.starter.service.document.ServiceInfos;
 import com.shoory.framework.starter.service.document.SimpleMethodInfos;
-
+@Component
 public class ServiceUtils {
-	public static ServiceInfos getInfo(Class<?> api) {
+	
+	@Autowired
+	private MethodUtils methodUtils;
+	
+	public  ServiceInfos getInfo(Class<?> api) {
 		ServiceInfos ret = new ServiceInfos();
 
 		Optional.ofNullable(api.getAnnotation(FeignClient.class))
@@ -31,12 +38,12 @@ public class ServiceUtils {
 	}
 
 
-	public static Map<String, MethodInfos> getMethodInfos(Class<?> api, ServiceInfos serviceInfo) {
+	public  Map<String, MethodInfos> getMethodInfos(Class<?> api, ServiceInfos serviceInfo) {
 		Map<String, MethodInfos> ret = new HashMap<String, MethodInfos>();
 		// 方法
 		Arrays.stream(api.getDeclaredMethods())
 			.forEach(method -> {
-				MethodInfos methodInfo = MethodUtils.getInfo(method);
+				MethodInfos methodInfo = methodUtils.getInfo(method);
 				ret.put(methodInfo.getMethod(), methodInfo);
 			});
 		

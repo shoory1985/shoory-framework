@@ -13,5 +13,4 @@ import lombok.NoArgsConstructor;
 public class ReturnInfos {
 	private String code;
 	private String message;
-	private String description;	
 }

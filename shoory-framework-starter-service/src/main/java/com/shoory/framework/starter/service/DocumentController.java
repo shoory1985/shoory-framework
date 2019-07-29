@@ -38,6 +38,9 @@ public class DocumentController {
 	private PojoUtils pojoUtils;
 	@Autowired
 	private I18nComponent i18nComponent;
+	@Autowired
+	private ServiceUtils serviceUtils;
+
 
 	private ServiceInfos serviceInfo;
 	private Map<String, MethodInfos> methodInfos;
@@ -72,8 +75,8 @@ public class DocumentController {
 		return apiInfo != null 
 				&& apiInfo.getApiClass() != null
 				&& "prod".equalsIgnoreCase(springProfileActive)
-				&& (serviceInfo != null || (serviceInfo = ServiceUtils.getInfo(apiInfo.getApiClass())) != null)
-				&& (methodInfos != null || (methodInfos = ServiceUtils.getMethodInfos(apiInfo.getApiClass(), serviceInfo)) != null);
+				&& (serviceInfo != null || (serviceInfo = serviceUtils.getInfo(apiInfo.getApiClass())) != null)
+				&& (methodInfos != null || (methodInfos = serviceUtils.getMethodInfos(apiInfo.getApiClass(), serviceInfo)) != null);
 	}
 
 	@Bean

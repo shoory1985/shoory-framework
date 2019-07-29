@@ -2,6 +2,7 @@ package com.shoory.framework.starter.service.document.utils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -23,12 +24,19 @@ import com.shoory.framework.starter.api.annotation.ApiModel;
 import com.shoory.framework.starter.api.annotation.ApiName;
 import com.shoory.framework.starter.api.annotation.ApiRequired;
 import com.shoory.framework.starter.service.BaseService;
+import com.shoory.framework.starter.service.I18nComponent;
 import com.shoory.framework.starter.service.SpringUtil;
 import com.shoory.framework.starter.service.document.FieldInfos;
+import com.shoory.framework.starter.service.document.ReturnInfos;
 
 @Component
 public class FieldUtils {
-	private static FieldInfos getInfo(Field field) {
+	
+	
+	@Autowired
+	private I18nComponent i18nComponent;
+	
+	private  FieldInfos getInfo(Field field) {
 		FieldInfos fieldInfo = new FieldInfos();
 		//类名
 		fieldInfo.setClassName(field.getType().getTypeName());
@@ -54,7 +62,7 @@ public class FieldUtils {
 		return fieldInfo;
 	}
 
-	private static FieldInfos getInfo(Method getterMethod) {
+	private  FieldInfos getInfo(Method getterMethod) {
 		FieldInfos fieldInfo = new FieldInfos();
 		//类名
 		//fieldInfo.setClassName(method.getType().getTypeName() + (method.getType().isArray() ? "[]" : ""));
@@ -86,15 +94,17 @@ public class FieldUtils {
 		
 		return fieldInfo;
 	}
+	
+	
 
-	private static FieldInfos[] getApiModel(Field field) {
+	private  FieldInfos[] getApiModel(Field field) {
 		if (field.getAnnotation(ApiModel.class) != null) {
 			return getList(field.getType().isArray() ? field.getType().getComponentType() : field.getType(), false);
 		}
 		return null;
 	}
 	
-	public static FieldInfos[] getList(Class<?> clazz, boolean isResponse) {
+	public  FieldInfos[] getList(Class<?> clazz, boolean isResponse) {
 		List<FieldInfos> list = new ArrayList<FieldInfos>();
 		if (isResponse) {
 			list.add(new FieldInfos("code", "返回代码", true, "", "", "String", null));
@@ -108,11 +118,33 @@ public class FieldUtils {
 		} else {
 			Arrays.stream(clazz.getDeclaredFields())
 				.filter(field -> !field.getName().equalsIgnoreCase("serialVersionUID"))
+				.filter(field ->!Modifier.isFinal(field.getModifiers())&&!Modifier.isStatic(field.getModifiers())&&field.getType()!=String.class)
 				.sorted(Comparator.comparing(Field::getName))
 				.forEach(field -> list.add(getInfo(field)));
 		}
 		
 		return list.toArray(new FieldInfos[list.size()]);
+	}
+	
+	public  ReturnInfos[] getList(Class<?> requestClass) {
+		List<ReturnInfos> list = new ArrayList<ReturnInfos>();
+
+			Arrays.stream(requestClass.getDeclaredFields())
+				.filter(field -> !field.getName().equalsIgnoreCase("serialVersionUID"))
+				.filter(field ->Modifier.isFinal(field.getModifiers())&&Modifier.isStatic(field.getModifiers())&&field.getType()==String.class)
+				.sorted(Comparator.comparing(Field::getName))
+				.forEach(field ->{
+					String value;
+					try {
+						value = (String) field.get(String.class);
+					} catch (Exception e) {
+						value=field.getName();
+					}
+					list.add(new ReturnInfos(value, i18nComponent.getMessage(value,"zh_CN")));
+				});
+		
+		
+		return list.toArray(new ReturnInfos[list.size()]);
 	}
 	
 }
