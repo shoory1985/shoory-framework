@@ -122,11 +122,12 @@ public class MethodRouter {
 	
 	private BaseResponse baseInvoke(BaseService method, BaseRequest request) {
 		try {
-			// 验证入参（验证失败则抛出异常）
-			pojoUtils.validate(request);
 			BaseResponse response = null;
 			
 			try {
+				// 验证入参（验证失败则抛出异常）
+				pojoUtils.validate(request);
+				
 				// 乐观锁重试
 				int numAttempts = 0;
 				int maxRetries = 2;
@@ -163,7 +164,7 @@ public class MethodRouter {
 			return response;
 		} catch (SysException se) {
 			BaseResponse response = new BaseResponse();
-			response.setCode(BaseRequest.ERROR_INTERNAL);
+			response.setCode(se.getCode());
 			response.setMessage(se.getMessage());
 			return response;
 		} catch (Exception e) {
