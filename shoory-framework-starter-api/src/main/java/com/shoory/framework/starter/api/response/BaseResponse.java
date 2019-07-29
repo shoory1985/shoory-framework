@@ -10,7 +10,6 @@ import com.shoory.framework.starter.api.annotation.ApiHidden;
 import com.shoory.framework.starter.api.annotation.ApiName;
 import com.shoory.framework.starter.api.annotation.ApiRequired;
 import com.shoory.framework.starter.api.constants.BizException;
-import com.shoory.framework.starter.api.constants.Resultable;
 import com.shoory.framework.starter.api.constants.SysException;
 
 import lombok.Data;
@@ -35,11 +34,6 @@ public class BaseResponse implements Serializable {
 
 	@ApiName("响应消息")
 	private String message;
-
-	public void setResult(Resultable resultable, String lang) {
-		this.code = resultable.getCode();
-		this.message = resultable.getMessage(lang);
-	}
 
 	public boolean isSuccess() {
 		return code != null && code.trim().equals("SUCCESS");

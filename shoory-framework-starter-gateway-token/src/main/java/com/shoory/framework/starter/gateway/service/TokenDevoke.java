@@ -5,11 +5,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
-import com.shoory.framework.starter.api.constants.BizException;
-import com.shoory.framework.starter.gateway.api.constants.TokenError;
 import com.shoory.framework.starter.gateway.api.request.TokenDevokeRequest;
 import com.shoory.framework.starter.gateway.api.response.TokenDevokeResponse;
 import com.shoory.framework.starter.gateway.document.GatewaySessions;

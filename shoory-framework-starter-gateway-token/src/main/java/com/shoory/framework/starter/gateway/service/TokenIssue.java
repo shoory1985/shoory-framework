@@ -20,15 +20,9 @@ public class TokenIssue extends BaseService<TokenIssueRequest, TokenIssueRespons
 
 	@Autowired
 	private GatewaySessionRepository gatewaySessionRepository;
-
-	@Value("${spring.redis.password}")
-	private String password;
 	
 	@Override
 	public TokenIssueResponse invoke(TokenIssueRequest request) {
-		System.out.println("=========="+password+"===========");
-		
-		
 		// 作废旧的
 		{
 			List<GatewaySessions> list = gatewaySessionRepository.findByCredential(request.getCredential());

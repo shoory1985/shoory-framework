@@ -23,6 +23,12 @@ public class BaseRequest implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	public static final String SUCCESS = "SUCCESS";
+	public static final String ERROR_UNKNOWN = "ERROR_UNKNOWN";
+	public static final String ERROR_METHOD_NOT_FOUND = "ERROR_METHOD_NOT_FOUND";
+	public static final String ERROR_INTERNAL = "ERROR_INTERNAL";
+	public static final String ERROR_INVALID_PARAMETERS = "ERROR_INVALID_PARAMETERS";
+
 	@ApiName("语言")
 	private String lang = "zh_CN";
 	

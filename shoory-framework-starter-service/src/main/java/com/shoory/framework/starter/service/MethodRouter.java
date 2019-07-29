@@ -9,7 +9,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.shoory.framework.starter.api.request.UserBaseRequest;
-import com.shoory.framework.starter.api.constants.BaseResult;
 import com.shoory.framework.starter.api.constants.BizException;
 import com.shoory.framework.starter.api.constants.SysException;
 import com.shoory.framework.starter.api.request.BaseRequest;
@@ -49,14 +48,14 @@ public class MethodRouter {
 			return pojoUtils.toJson(this.baseInvoke(method, request));
 		} catch (SysException se) {
 			BaseResponse response = new BaseResponse();
-			response.setCode(BaseResult.ERROR_INTERNAL.toString());
+			response.setCode(BaseRequest.ERROR_INTERNAL);
 			response.setMessage(se.getMessage());
 			return pojoUtils.toJson(response);
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 			BaseResponse response = new BaseResponse();
 			e.printStackTrace();
-			response.setCode(BaseResult.ERROR_INTERNAL.toString());
+			response.setCode(BaseRequest.ERROR_INTERNAL);
 			response.setMessage(e.getMessage());
 			return pojoUtils.toJson(response);
 		}
@@ -77,7 +76,7 @@ public class MethodRouter {
 		// 检查类型
 		if (method == null || !(method instanceof BaseService)) {
 			// 没找到对应的接口
-			throw new BizException(BaseResult.ERROR_METHOD_NOT_FOUND.toString());
+			throw new BizException(BaseRequest.ERROR_METHOD_NOT_FOUND);
 		} else {
 			return (BaseService)method;
 		}
@@ -149,7 +148,7 @@ public class MethodRouter {
 				response.setCode(be.getMessage());
 			} catch (Throwable e) {
 				response = new BaseResponse();
-				response.setCode(BaseResult.ERROR_INTERNAL.getCode());
+				response.setCode(BaseRequest.ERROR_INTERNAL);
 				response.setMessage(e.getMessage());
 				e.printStackTrace();
 			}
@@ -164,14 +163,14 @@ public class MethodRouter {
 			return response;
 		} catch (SysException se) {
 			BaseResponse response = new BaseResponse();
-			response.setCode(BaseResult.ERROR_INTERNAL.toString());
+			response.setCode(BaseRequest.ERROR_INTERNAL);
 			response.setMessage(se.getMessage());
 			return response;
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 			BaseResponse response = new BaseResponse();
 			e.printStackTrace();
-			response.setCode(BaseResult.ERROR_INTERNAL.toString());
+			response.setCode(BaseRequest.ERROR_INTERNAL);
 			response.setMessage(e.getMessage());
 			return response;
 		}
