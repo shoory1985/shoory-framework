@@ -1,4 +1,4 @@
-package com.shoory.framework.starter.service.document;
+package com.shoory.framework.starter.service.document.models;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

@@ -1,6 +1,5 @@
 package com.shoory.framework.starter.service.document.utils;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -11,18 +10,29 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
+import com.shoory.framework.starter.api.ApiInfo;
 import com.shoory.framework.starter.api.annotation.ApiDescription;
 import com.shoory.framework.starter.api.annotation.ApiName;
-import com.shoory.framework.starter.service.document.MethodInfos;
-import com.shoory.framework.starter.service.document.ServiceInfos;
-import com.shoory.framework.starter.service.document.SimpleMethodInfos;
+import com.shoory.framework.starter.service.document.models.MethodInfos;
+import com.shoory.framework.starter.service.document.models.ModuleInfos;
+import com.shoory.framework.starter.service.document.models.ServiceInfos;
+import com.shoory.framework.starter.service.document.models.SimpleMethodInfos;
 @Component
 public class ServiceUtils {
-	
+	@Autowired
+	private ApiInfo apiInfo;
+	@Autowired
+	private DocumentUtils documentUtils;
 	@Autowired
 	private MethodUtils methodUtils;
+	
+	@Bean
+	public ServiceUtils getServiceUtils() {
+		return new ServiceUtils();
+	}
 	
 	public  ServiceInfos getInfo(Class<?> api) {
 		ServiceInfos ret = new ServiceInfos();
@@ -38,18 +48,21 @@ public class ServiceUtils {
 	}
 
 
-	public  Map<String, MethodInfos> getMethodInfos(Class<?> api, ServiceInfos serviceInfo) {
-		Map<String, MethodInfos> ret = new HashMap<String, MethodInfos>();
+	public  void fillMethodInfos() {
+		Map<String, MethodInfos> mapMethod = documentUtils.getMapMethod();
+		Map<String, ModuleInfos> mapModule = documentUtils.getMapModule();
+		ServiceInfos serviceInfo = documentUtils.getServiceInfo();
+		
 		// 方法
-		Arrays.stream(api.getDeclaredMethods())
+		Arrays.stream(apiInfo.getApiClass().getDeclaredMethods())
 			.forEach(method -> {
 				MethodInfos methodInfo = methodUtils.getInfo(method);
-				ret.put(methodInfo.getMethod(), methodInfo);
+				mapMethod.put(methodInfo.getMethod(), methodInfo);
 			});
 		
 		//拷
 		List<SimpleMethodInfos> methods = new ArrayList<SimpleMethodInfos>();
-		ret.values().stream()
+		mapMethod.values().stream()
 			.sorted(Comparator.comparing(MethodInfos::getMethod))
 			.forEach(methodInfo -> {
 				SimpleMethodInfos smi = new SimpleMethodInfos();
@@ -58,9 +71,16 @@ public class ServiceUtils {
 				smi.setDescription(methodInfo.getDescription());
 				smi.setModule(methodInfo.getModule());
 				methods.add(smi);
+				
+				//填充框架
+				ModuleInfos mi = mapModule.get(smi.getModule());
+				if (mi == null) {
+					mapModule.put(smi.getModule(), mi = new ModuleInfos());
+					mi.setMethods(new HashMap<String, SimpleMethodInfos>());
+					mi.setModule(smi.getModule());
+				}
+				mi.getMethods().put(smi.getMethod(), smi);
 			});
 		serviceInfo.setMethods(methods.toArray(new SimpleMethodInfos[methods.size()]));
-			
-		return ret;
 	}
 }

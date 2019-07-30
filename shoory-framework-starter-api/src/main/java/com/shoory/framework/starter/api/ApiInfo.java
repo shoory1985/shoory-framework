@@ -1,12 +1,14 @@
 package com.shoory.framework.starter.api;
 
+import java.util.Map;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class ApiInfo {
 	private Class<?> apiClass;
 	private Class<?>[] dependentAppClasses;

@@ -3,43 +3,43 @@ package com.shoory.framework.starter.service.document.utils;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import com.shoory.framework.starter.api.annotation.ApiArticle;
-import com.shoory.framework.starter.api.annotation.ApiArticles;
 import com.shoory.framework.starter.api.annotation.ApiDescription;
 import com.shoory.framework.starter.api.annotation.ApiExamples;
 import com.shoory.framework.starter.api.annotation.ApiModel;
 import com.shoory.framework.starter.api.annotation.ApiName;
-import com.shoory.framework.starter.api.annotation.ApiRequired;
-import com.shoory.framework.starter.service.BaseService;
 import com.shoory.framework.starter.service.I18nComponent;
-import com.shoory.framework.starter.service.SpringUtil;
-import com.shoory.framework.starter.service.document.FieldInfos;
-import com.shoory.framework.starter.service.document.ReturnInfos;
+import com.shoory.framework.starter.service.document.models.FieldInfos;
+import com.shoory.framework.starter.service.document.models.ModelInfos;
+import com.shoory.framework.starter.service.document.models.ReturnInfos;
 
 @Component
 public class FieldUtils {
-	
-	
+
+	@Autowired
+	private DocumentUtils documentUtils;
 	@Autowired
 	private I18nComponent i18nComponent;
 	
 	private  FieldInfos getInfo(Field field) {
 		FieldInfos fieldInfo = new FieldInfos();
+		String className = this.getModelClass(field).getTypeName();
 		//类名
-		fieldInfo.setClassName(field.getType().getTypeName());
+		fieldInfo.setClassName(className + this.suffix(field));
 		//字段
 		fieldInfo.setField(field.getName());
 		//中文名称
@@ -58,6 +58,14 @@ public class FieldUtils {
 		
 		//对象参数
 		fieldInfo.setParams(getApiModel(field));
+		
+		//填充
+		if (!documentUtils.getMapModel().containsKey(className)) {
+			ModelInfos mi = new ModelInfos();
+			mi.setClassName(className);
+			mi.setParams(fieldInfo.getParams());
+			documentUtils.getMapModel().put(className, mi);
+		}
 		
 		return fieldInfo;
 	}
@@ -99,9 +107,23 @@ public class FieldUtils {
 
 	private  FieldInfos[] getApiModel(Field field) {
 		if (field.getAnnotation(ApiModel.class) != null) {
-			return getList(field.getType().isArray() ? field.getType().getComponentType() : field.getType(), false);
+			return getList(getModelClass(field), false);
 		}
 		return null;
+	}
+	private String suffix(Field field) {
+		if (field.getType().isArray()) {return "[]";}
+		if (field.getType().isAssignableFrom(List.class)) {return "[]";}
+		if (field.getType().isAssignableFrom(Set.class)) {return "[]";}
+		if (field.getType().isAssignableFrom(Map.class)) {return "<Map>";}
+		return "";
+	}
+	private Class<?> getModelClass(Field field) {
+		return field.getType().isArray() 
+			? field.getType().getComponentType() 
+			: (field.getType().isAssignableFrom(List.class) || field.getType().isAssignableFrom(Set.class) || field.getType().isAssignableFrom(Map.class))
+				? (Class<?>)((ParameterizedType)field.getGenericType()).getActualTypeArguments()[0]
+				: field.getType();
 	}
 	
 	public  FieldInfos[] getList(Class<?> clazz, boolean isResponse) {
@@ -118,7 +140,7 @@ public class FieldUtils {
 		} else {
 			Arrays.stream(clazz.getDeclaredFields())
 				.filter(field -> !field.getName().equalsIgnoreCase("serialVersionUID"))
-				.filter(field ->!Modifier.isFinal(field.getModifiers())&&!Modifier.isStatic(field.getModifiers())&&field.getType()!=String.class)
+				.filter(field -> !(Modifier.isFinal(field.getModifiers()) && Modifier.isStatic(field.getModifiers()) && field.getType()==String.class))
 				.sorted(Comparator.comparing(Field::getName))
 				.forEach(field -> list.add(getInfo(field)));
 		}

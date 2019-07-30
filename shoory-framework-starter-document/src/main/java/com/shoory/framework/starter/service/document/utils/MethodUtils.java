@@ -3,7 +3,9 @@ package com.shoory.framework.starter.service.document.utils;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +16,12 @@ import com.alibaba.nacos.client.utils.StringUtils;
 import com.shoory.framework.starter.api.annotation.ApiDescription;
 import com.shoory.framework.starter.api.annotation.ApiModule;
 import com.shoory.framework.starter.api.annotation.ApiName;
-import com.shoory.framework.starter.service.document.MethodInfos;
-import com.shoory.framework.starter.service.document.ReturnInfos;
+import com.shoory.framework.starter.service.document.models.MethodInfos;
+import com.shoory.framework.starter.service.document.models.ModelInfos;
+import com.shoory.framework.starter.service.document.models.ReturnInfos;
 
 @Component
 public class MethodUtils {
-	
 	@Autowired
 	private FieldUtils fieldUtils;
 	

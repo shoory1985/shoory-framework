@@ -1,0 +1,63 @@
+      <div class="logo">
+        <a href="./" class="simple-text logo-normal">
+          文档中心
+        </a>
+      </div>
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">
+              <i class="fa fa-home"></i>
+              <p>概况</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="model.html">
+              <i class="fa fa-database"></i>
+              <p>数据模型</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+<script>
+
+$(document).ready(function(){
+	$.get(END_POINT + 'doc/module', function(result) {
+		var html = '';
+		for (var module in result) {
+			var item = result[module];
+			var method_count = 0;
+			for (var i in item.methods) {
+				method_count++;
+			}
+			
+			html += '<li class="nav-item ">';
+			html += '	<a class="nav-link" href="module.html#'+item.module+'">';
+			html += '	<i class="fa fa-cubes"></i>';
+			html += '	<p>'+(item.module != '' ? item.module : '<b>默认模块</b>')+'('+method_count+')</p>';
+			html += '	</a>';
+			html += '</li>';
+		}
+		$(".nav").append(html);
+		
+		$.get(END_POINT + 'doc/i18n', function(result) {
+			var htmlI18n = '';
+			for (var i in result) {
+				var lang = result[i];
+				
+				htmlI18n += '<li class="nav-item ">';
+				htmlI18n += '	<a class="nav-link" href="i18n.html#'+lang+'">';
+				htmlI18n += '	<i class="fa fa-language"></i>';
+				htmlI18n += '	<p>国际化('+lang+')</p>';
+				htmlI18n += '	</a>';
+				htmlI18n += '</li>';
+			}
+			$(".nav").append(htmlI18n);
+			
+			//高亮
+			activeNav();
+		});
+		
+	});
+});
+</script>
