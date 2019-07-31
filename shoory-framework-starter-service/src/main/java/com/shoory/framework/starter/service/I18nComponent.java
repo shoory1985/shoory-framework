@@ -48,7 +48,7 @@ public class I18nComponent {
 	private void loadResources() {
 		Properties propIndex = loadProperty("i18n/index.properties");
 		propIndex.forEach((filename, lang) -> {
-			Properties propLang = loadProperty("i18n/"+lang+".properties");
+			Properties propLang = loadProperty("i18n/"+filename+".properties");
 			messages.put(lang.toString(), propLang);
 		});
     }

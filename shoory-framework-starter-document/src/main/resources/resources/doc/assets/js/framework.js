@@ -34,6 +34,10 @@ function baseType(model) {
 	case 'Float':
 	case 'bool':
 	case 'Boolean':
+	case 'Byte':
+	case 'byte':
+	case 'Char':
+	case 'char':
 		return true;
 	default:
 		return false;
