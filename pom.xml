@@ -21,6 +21,7 @@
 		<module>shoory-framework-starter-oss-tencentcloud</module>
 		<module>shoory-framework-starter-redis</module>
 		<module>shoory-framework-starter-service</module>
+		<module>shoory-framework-starter-service-document</module>
 		<module>shoory-framework-starter-sms</module>
 		<module>shoory-framework-starter-sms-tencentcloud</module>
 		<module>shoory-framework-starter-utils</module>
