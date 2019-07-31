@@ -35,6 +35,7 @@
                   <div class="table-responsive">
                     <table class="table">
                       <thead class=" text-primary">
+                        <th>序号</th>
                         <th>代码</th>
                         <th>翻译</th>
                       </thead>
@@ -98,8 +99,16 @@ function refreshPage() {
 	$.get(END_POINT + 'doc/i18n/'+currentLang, function(result) {
 		var html = '';
 		var message_count = 0;
+		var codeArr = Array();
 		for (var code in result) {
+			codeArr.push(code);
+		}
+		codeArr = codeArr.sort();
+
+		for (var i in codeArr) {
+			var code = codeArr[i];
 				html += '<tr>';
+		        html += '	<td>'+(parseInt(i)+1)+'</td>'
 		        html += '	<td>'+code+'</td>'
 		        html += '	<td>'+result[code]+'</td>'
 		        html += '</tr>';
@@ -111,6 +120,7 @@ function refreshPage() {
 	
 
 	//高亮
+	setTitle('国际化: ' + currentLang);
 	activeNav();
 }
 $(document).ready(function() {

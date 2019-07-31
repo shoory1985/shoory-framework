@@ -35,7 +35,11 @@
 			<artifactId>shoory-framework-starter-service</artifactId>
 			<version>${shoory-framework.version}</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>com.shoory.framework</groupId>
+			<artifactId>shoory-framework-starter-service-document</artifactId>
+			<version>${shoory-framework.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.shoory.framework</groupId>
 			<artifactId>shoory-framework-starter-gateway-token-api</artifactId>

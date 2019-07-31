@@ -7,12 +7,12 @@ import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class FieldUtils {
 	
 	private  FieldInfos getInfo(Field field) {
 		FieldInfos fieldInfo = new FieldInfos();
-		String className = this.getModelClass(field).getTypeName();
+		String className = this.getModelClass(field).getSimpleName();
 		//类名
 		fieldInfo.setClassName(className + this.suffix(field));
 		//字段
@@ -47,6 +47,8 @@ public class FieldUtils {
 				apiName -> fieldInfo.setName(apiName.value()));
 		//是否必需
 		Optional.ofNullable(field.getAnnotation(NotNull.class)).ifPresent(
+				notNull -> fieldInfo.setRequired(true));
+		Optional.ofNullable(field.getAnnotation(NotBlank.class)).ifPresent(
 				notNull -> fieldInfo.setRequired(true));
 		//描述
 		Optional.ofNullable(field.getAnnotation(ApiDescription.class)).ifPresent(
@@ -150,21 +152,24 @@ public class FieldUtils {
 	
 	public  ReturnInfos[] getList(Class<?> requestClass) {
 		List<ReturnInfos> list = new ArrayList<ReturnInfos>();
-
-			Arrays.stream(requestClass.getDeclaredFields())
-				.filter(field -> !field.getName().equalsIgnoreCase("serialVersionUID"))
-				.filter(field ->Modifier.isFinal(field.getModifiers())&&Modifier.isStatic(field.getModifiers())&&field.getType()==String.class)
-				.sorted(Comparator.comparing(Field::getName))
-				.forEach(field ->{
-					String value;
-					try {
-						value = (String) field.get(String.class);
-					} catch (Exception e) {
-						value=field.getName();
-					}
-					list.add(new ReturnInfos(value, i18nComponent.getMessage(value,"zh_CN")));
-				});
+		//预置
+		String[] GENERAL_CODES = new String[] {"SUCCESS", "ERROR_INTERNAL"};
+		Arrays.stream(GENERAL_CODES)
+			.forEach(code -> list.add(new ReturnInfos(code, i18nComponent.getMessage(code,"zh_CN"))));
 		
+		Arrays.stream(requestClass.getDeclaredFields())
+			.filter(field -> !field.getName().equalsIgnoreCase("serialVersionUID"))
+			.filter(field ->Modifier.isFinal(field.getModifiers())&&Modifier.isStatic(field.getModifiers())&&field.getType()==String.class)
+			.sorted(Comparator.comparing(Field::getName))
+			.forEach(field ->{
+				String value;
+				try {
+					value = (String) field.get(String.class);
+					} catch (Exception e) {
+					value=field.getName();
+				}
+				list.add(new ReturnInfos(value, i18nComponent.getMessage(value,"zh_CN")));
+			});
 		
 		return list.toArray(new ReturnInfos[list.size()]);
 	}

@@ -12,7 +12,7 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="model.html">
+            <a class="nav-link" href="model_list.html">
               <i class="fa fa-database"></i>
               <p>数据模型</p>
             </a>
@@ -34,7 +34,7 @@ $(document).ready(function(){
 			html += '<li class="nav-item ">';
 			html += '	<a class="nav-link" href="module.html#'+item.module+'">';
 			html += '	<i class="fa fa-cubes"></i>';
-			html += '	<p>'+(item.module != '' ? item.module : '<b>默认模块</b>')+'('+method_count+')</p>';
+			html += '	<p>'+ item.module + '模块'+'('+method_count+')</p>';
 			html += '	</a>';
 			html += '</li>';
 		}

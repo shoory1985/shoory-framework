@@ -1,24 +1,17 @@
 package com.shoory.framework.starter.service.document.utils;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.alibaba.nacos.client.utils.StringUtils;
 import com.shoory.framework.starter.api.annotation.ApiDescription;
 import com.shoory.framework.starter.api.annotation.ApiModule;
 import com.shoory.framework.starter.api.annotation.ApiName;
 import com.shoory.framework.starter.service.document.models.MethodInfos;
-import com.shoory.framework.starter.service.document.models.ModelInfos;
-import com.shoory.framework.starter.service.document.models.ReturnInfos;
 
 @Component
 public class MethodUtils {
@@ -33,7 +26,7 @@ public class MethodUtils {
 			ret.setMethod(method.getName());
 			//模块
 			Optional.ofNullable(method.getAnnotation(ApiModule.class)).ifPresent(apiModule -> {
-				ret.setDescription(apiModule.value());
+				ret.setModule(apiModule.value());
 			});
 			//方法名
 			Optional.ofNullable(method.getAnnotation(ApiName.class)).ifPresent(apiName -> {
