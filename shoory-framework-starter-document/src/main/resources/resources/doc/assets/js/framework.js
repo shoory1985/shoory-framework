@@ -38,6 +38,7 @@ function baseType(model) {
 	case 'byte':
 	case 'Char':
 	case 'char':
+	case 'boolean':
 		return true;
 	default:
 		return false;
