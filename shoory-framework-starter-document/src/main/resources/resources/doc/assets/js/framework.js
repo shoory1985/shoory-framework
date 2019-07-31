@@ -32,6 +32,8 @@ function baseType(model) {
 	case 'long':
 	case 'float':
 	case 'Float':
+	case 'bool':
+	case 'Boolean':
 		return true;
 	default:
 		return false;

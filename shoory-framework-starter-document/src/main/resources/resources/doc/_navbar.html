@@ -1,6 +1,6 @@
-<div class="container-fluid">
+<div class="container-fluid my_navbar">
           <div class="navbar-wrapper">
-            <a class="navbar-brand"  href="./">文档中心</a>
+            <a class="navbar-brand service"  href="index.html"></a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -25,6 +25,10 @@
         
 <script>
 $(document).ready(function(){
+	
 	$(".navbar-wrapper").append('&gt;&gt;'+ '<a class="navbar-brand">'+$("title").html()+'</a>');
+	$.get(END_POINT + 'doc/service', function(result) {
+		$('.my_navbar .service').html(result.service.toUpperCase());
+	});
 });
 </script>

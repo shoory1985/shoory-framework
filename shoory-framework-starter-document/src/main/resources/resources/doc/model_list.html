@@ -95,11 +95,13 @@ function refreshPage() {
 	$.get(END_POINT + 'doc/model', function(result) {
 		var html = '';
 		var modelList = result.sort();
+		var k = 0;
 		for (var i in modelList) {
 			var model = modelList[i];
 			if (baseType(model)) {continue;}
+			k++;
 			html += '<tr>';
-	        html += '	<td>'+(parseInt(i)+1)+'</td>';
+	        html += '	<td>'+k+'</td>';
 	        html += '	<td>'+modelLink(model)+'</td>';
 	        html += '</tr>';
 		}

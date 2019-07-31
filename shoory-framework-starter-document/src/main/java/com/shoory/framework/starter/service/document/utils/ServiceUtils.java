@@ -51,8 +51,7 @@ public class ServiceUtils {
 	public  void fillMethodInfos() {
 		Map<String, MethodInfos> mapMethod = documentUtils.getMapMethod();
 		Map<String, ModuleInfos> mapModule = documentUtils.getMapModule();
-		ServiceInfos serviceInfo = documentUtils.getServiceInfo();
-		
+
 		// 方法
 		Arrays.stream(apiInfo.getApiClass().getDeclaredMethods())
 			.forEach(method -> {
@@ -81,6 +80,6 @@ public class ServiceUtils {
 				}
 				mi.getMethods().put(smi.getMethod(), smi);
 			});
-		serviceInfo.setMethods(methods.toArray(new SimpleMethodInfos[methods.size()]));
+		
 	}
 }

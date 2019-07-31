@@ -33,7 +33,7 @@
                     <i class="fa fa-money"></i>
                   </div>
                   <p class="card-category">接口</p>
-                  <h3 class="card-title">?/?
+                  <h3 class="card-title"><span class="method_count"></span>个
                   </h3>
                 </div>
                 <div class="card-footer">
@@ -50,7 +50,7 @@
                     <i class="fa  fa-balance-scale"></i>
                   </div>
                   <p class="card-category">模块</p>
-                  <h3 class="card-title">~</h3>
+                  <h3 class="card-title"><span class="module_count">?</span>个</h3>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
@@ -66,11 +66,11 @@
                     <i class="fa fa-database"></i>
                   </div>
                   <p class="card-category">数据模型</p>
-                  <h3 class="card-title">?个</h3>
+                  <h3 class="card-title"><span class="model_count">?</span>个</h3>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <i class="material-icons">local_offer</i> Tracked from Github
+                    <i class="fa fa-clock-o"></i>
                   </div>
                 </div>
               </div>
@@ -82,11 +82,11 @@
                     <i class="fa fa-language"></i>
                   </div>
                   <p class="card-category">国际化词条</p>
-                  <h3 class="card-title">?</h3>
+                  <h3 class="card-title"><span class="message_count">?</span>条</h3>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <i class="material-icons">update</i> Just Updated
+                    <i class="fa fa-clock-o"><span class="language_count">?</span>种语言</i>
                   </div>
                 </div>
               </div>
@@ -97,24 +97,18 @@
               <div class="card card-stats">
                 <div class="card-header card-header-rose card-header-icon">
                   <div class="card-icon">
-                    <i class="material-icons">link</i>
+                    <i class="fa fa-link"></i>
                   </div>
                   <p class="card-category">依赖的服务</p>
-                  <h3 class="card-title">?</h3>
+                  <h3 class="card-title"><span class="service_count"></span>个</h3>
                 </div>
                 <div class="card-body table-responsive">
                   <table class="table table-hover">
                     <thead class="text-warning">
                       <th>服务</th>
                       <th>服务名</th>
-                      <th>跳转</th>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>gateway-token</td>
-                        <td>网关令牌服务</td>
-                        <td>Go</td>
-                      </tr>
+                    <tbody class="service_list">
                     </tbody>
                   </table>
                 </div>
@@ -194,8 +188,32 @@
 	    }
 	});
  
- */
-  </script>
+//*/
+
+
+$(document).ready(function() {
+	$.get(END_POINT + 'doc/service', function(result) {
+		$(".method_count").html(result.methodCount);
+		$(".module_count").html(result.moduleCount);
+		$(".model_count").html(result.modelCount);
+		$(".message_count").html(result.messageCount);
+		$(".language_count").html(result.languageCount);
+		$(".message_count").html(result.messageCount);
+		
+
+		var html = '';
+		for (var i in result.dependentServices) {
+			var item = result.dependentServices[i];
+			html += '<tr>';
+			html += '<td><a href="../../'+item.service+'/doc/index.html">'+item.service+'</a></td>';
+			html += '<td>'+item.name+'</td>';
+			html += '</tr>';
+		}
+		$('.service_list').html(html);
+		$('.service_count').html(result.dependentServices.length);
+	});
+});
+</script>
 </body>
 
 </html>

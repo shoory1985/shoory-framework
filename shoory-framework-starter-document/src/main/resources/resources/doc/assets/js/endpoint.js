@@ -1,1 +1,1 @@
-var END_POINT = "http://localhost:9004/";
+var END_POINT = "../";

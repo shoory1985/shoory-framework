@@ -1,29 +1,21 @@
 package com.shoory.framework.starter.service.document.utils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import com.shoory.framework.starter.api.ApiInfo;
-import com.shoory.framework.starter.api.annotation.ApiDescription;
-import com.shoory.framework.starter.api.annotation.ApiName;
+import com.shoory.framework.starter.service.I18nComponent;
 import com.shoory.framework.starter.service.document.models.MethodInfos;
 import com.shoory.framework.starter.service.document.models.ModelInfos;
 import com.shoory.framework.starter.service.document.models.ModuleInfos;
 import com.shoory.framework.starter.service.document.models.ServiceInfos;
-import com.shoory.framework.starter.service.document.models.SimpleMethodInfos;
-
 import lombok.Getter;
+
 @Component
 public class DocumentUtils {
 	@Autowired
@@ -43,6 +35,9 @@ public class DocumentUtils {
 	@Getter
 	private Map<String, ModelInfos> mapModel = new HashMap<String, ModelInfos>();
 
+	@Autowired
+	private I18nComponent i18nComponent;
+	
 	@Bean
 	public DocumentUtils getDocumentUtils() {
 		return new DocumentUtils();
@@ -50,11 +45,26 @@ public class DocumentUtils {
 
 	public boolean ready() {
 		if (!inited) {
-			//当前
-			this.serviceInfo = serviceUtils.getInfo(apiInfo.getApiClass());
-			//依赖
+
 			//填充方法
 			serviceUtils.fillMethodInfos();
+			
+			//当前
+			this.serviceInfo = serviceUtils.getInfo(apiInfo.getApiClass());
+			
+			//依赖
+			
+			//
+			Arrays.stream(apiInfo.getDependentAppClasses())
+				.forEach(clazz -> serviceInfo.getDependentServices().add(serviceUtils.getInfo(clazz)));
+			serviceInfo.setModuleCount(mapModule.size());
+			serviceInfo.setMethodCount(mapMethod.size());
+			serviceInfo.setModelCount(mapModel.size());
+			
+			i18nComponent.getMessages().values().stream().forEach(prop -> serviceInfo.setMessageCount(serviceInfo.getMessageCount() + prop.size()));
+			
+			serviceInfo.setLanguageCount(i18nComponent.getMessages().size());
+			
 			
 			inited = true;
 		}

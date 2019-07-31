@@ -27,17 +27,30 @@ import com.shoory.framework.starter.service.document.models.MethodInfos;
 import com.shoory.framework.starter.service.document.models.ModelInfos;
 import com.shoory.framework.starter.service.document.models.ModuleInfos;
 import com.shoory.framework.starter.service.document.models.ServiceInfos;
+import com.shoory.framework.starter.service.document.utils.DocumentUtils;
 import com.shoory.framework.starter.service.document.utils.ServiceUtils;
 import com.shoory.framework.starter.utils.PojoUtils;
 
 @RestController
 @CrossOrigin
 public class DocumentController {
+	@Autowired
+	private DocumentUtils documentUtils;
+	@Autowired
+	private PojoUtils pojoUtils;
+	
 	@Bean
 	public SimpleUrlHandlerMapping StaticHandlerMapping(ResourceHttpRequestHandler handler) {
 		SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
 		mapping.setOrder(Ordered.HIGHEST_PRECEDENCE + 100);
 		mapping.setUrlMap(Collections.singletonMap("**/*.*", handler));
 		return mapping;
+	}
+	
+
+	@GetMapping(value = "/doc/service", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public String serviceInfo(HttpServletRequest request, HttpServletResponse response) {
+		documentUtils.ready();
+		return pojoUtils.toJson(documentUtils.getServiceInfo());
 	}
 }
