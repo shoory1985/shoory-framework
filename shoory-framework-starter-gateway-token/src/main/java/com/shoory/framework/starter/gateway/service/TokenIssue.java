@@ -4,11 +4,13 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.nacos.client.utils.StringUtils;
 import com.shoory.framework.starter.gateway.api.request.TokenIssueRequest;
 import com.shoory.framework.starter.gateway.api.response.TokenIssueResponse;
 import com.shoory.framework.starter.gateway.document.GatewaySessions;
@@ -35,7 +37,12 @@ public class TokenIssue extends BaseService<TokenIssueRequest, TokenIssueRespons
 		GatewaySessions gatewaySession = new GatewaySessions();
 		gatewaySession.setAccessToken(UUID.randomUUID().toString());
 		gatewaySession.setCredential(request.getCredential());
-		gatewaySession.setUris(new HashSet<String>(Arrays.asList(request.getUris())));
+		gatewaySession.setUris(new HashSet<String>(
+				Arrays.stream(request.getUris())
+				.filter(StringUtils::isNotBlank)
+				.map(String::toLowerCase)
+				.distinct()
+				.collect(Collectors.toList())));
 		gatewaySession.setRefreshToken(UUID.randomUUID().toString());
 		gatewaySession.setSignKey(UUID.randomUUID().toString());
 		gatewaySessionRepository.save(gatewaySession);
