@@ -120,7 +120,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
 		        //向headers中放文件，记得build
 		        ServerHttpRequest newRequest = exchange.getRequest().mutate()
 		        		.header("Credential", gatewaySession.getCredential())
-		        		.header("ClientAddress", request.getHeaders().getFirst("X-Real-IP"))
+		        		//.header("ClientAddress", request.getHeaders().getFirst("X-Real-IP"))
 		        		.build();
 				return chain.filter(exchange.mutate().request(newRequest).build());
 			}
