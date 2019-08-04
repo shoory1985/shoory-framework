@@ -1,5 +1,7 @@
 package com.shoory.framework.starter.service;
 
+import java.util.Optional;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -158,7 +160,8 @@ public class MethodRouter {
 			
 			//i18n
 			if (response.getMessage() == null) {
-				response.setMessage(i18nComponent.getMessage(response.getCode(), request.getLang()));
+				response.setMessage(
+						Optional.ofNullable(i18nComponent.getMessage(response.getCode(), request.getLang())).orElse(""));
 			}
 			
 			return response;
