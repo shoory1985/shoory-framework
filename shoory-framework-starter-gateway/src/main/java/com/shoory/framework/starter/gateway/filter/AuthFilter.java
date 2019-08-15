@@ -1,6 +1,5 @@
 package com.shoory.framework.starter.gateway.filter;
 
-import com.alibaba.fastjson.JSONObject;
 import com.shoory.framework.starter.gateway.document.GatewaySessions;
 import com.shoory.framework.starter.gateway.repository.GatewaySessionRepository;
 
@@ -41,7 +40,6 @@ public class AuthFilter implements GlobalFilter, Ordered {
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		
 		ServerHttpRequest request = exchange.getRequest();
-		System.out.println(JSONObject.toJSONString(request));
 		
 		
 		// 方法检查
