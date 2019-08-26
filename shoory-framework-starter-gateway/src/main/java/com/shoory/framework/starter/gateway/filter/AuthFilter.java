@@ -6,6 +6,7 @@ import com.shoory.framework.starter.gateway.repository.GatewaySessionRepository;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,11 @@ public class AuthFilter implements GlobalFilter, Ordered {
 				return this.forbidden(exchange.getResponse(), ERROR_FORBIDDEN);
 			} else if (pieces[2].startsWith("pub")) {
 				// pub放行
+				ServerHttpRequest newRequest = exchange.getRequest().mutate()
+		        		.header("ClientAddress", Optional.ofNullable(request.getHeaders().getFirst("X-Real-IP"))
+		        				.orElse(exchange.getRequest().getRemoteAddress().getAddress().getHostAddress()))
+		        		.build();
+				return chain.filter(exchange.mutate().request(newRequest).build());
 			} else if (pieces[2].startsWith("sys")) {
 				// sys拦截
 				return this.forbidden(exchange.getResponse(), ERROR_FORBIDDEN);
@@ -114,11 +120,11 @@ public class AuthFilter implements GlobalFilter, Ordered {
 					return this.forbidden(exchange.getResponse(), ERROR_FORBIDDEN);
 				}
 
-		        
 		        //向headers中放文件，记得build
 		        ServerHttpRequest newRequest = exchange.getRequest().mutate()
 		        		.header("Credential", gatewaySession.getCredential())
-		        		//.header("ClientAddress", request.getHeaders().getFirst("X-Real-IP"))
+		        		.header("ClientAddress", Optional.ofNullable(request.getHeaders().getFirst("X-Real-IP"))
+		        				.orElse(exchange.getRequest().getRemoteAddress().getAddress().getHostAddress()))
 		        		.build();
 				return chain.filter(exchange.mutate().request(newRequest).build());
 			}
