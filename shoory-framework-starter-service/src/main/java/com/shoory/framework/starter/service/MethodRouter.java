@@ -160,8 +160,8 @@ public class MethodRouter {
 			
 			//i18n
 			if (response.getMessage() == null) {
-				response.setMessage(
-						Optional.ofNullable(i18nComponent.getMessage(response.getCode(), request.getLang())).orElse(""));
+				response.setMessage(Optional.ofNullable(i18nComponent.getMessage(response.getCode(), request.getLang()))
+						.orElse(response.getCode()));
 			}
 			
 			return response;
