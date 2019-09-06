@@ -177,8 +177,23 @@ public class DateUtils {
 
 		return age;
 	}
-
+	
 	public int getAge(String dateOfBirth) {
 		return this.getAgeByTime(dateOfBirth, System.currentTimeMillis());
+	}
+	
+	/**
+	 * 获取days天之前的日期
+	 * @param days  天数
+	 * @return
+	 */
+	public String getDateBefore(int days) {
+		SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd");
+		TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
+		Calendar cal = Calendar.getInstance();// 获取当前日期
+		long time = cal.getTimeInMillis()- days * 24 * 60 * 60 * 1000; //得到days天前的时间戳
+		cal.setTimeInMillis(time);
+		String  date = sdf.format(cal.getTime());  
+		return date;
 	}
 }
