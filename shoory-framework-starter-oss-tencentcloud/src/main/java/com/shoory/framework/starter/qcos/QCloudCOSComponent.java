@@ -2,8 +2,11 @@ package com.shoory.framework.starter.qcos;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.Optional;
+
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,14 +21,12 @@ import com.shoory.framework.starter.oss.OssComponent;
 import com.shoory.framework.starter.utils.DateUtils;
 
 @Component
-public class QCloudCOSComponent {
+public class QCloudCOSComponent implements OssComponent {
 	@Value("${bucket.name}")
 	public String bucketName;
 
 	@Autowired
 	private COSClient cosClient;
-	@Autowired
-	private DateUtils dateUtils;
 
 	public String getExtFileName(String mimeType) {
 		switch (mimeType.toLowerCase()) {
@@ -42,40 +43,27 @@ public class QCloudCOSComponent {
 		return "";
 	}
 
-	public String upload(String mimeType, InputStream is, long size, long id, String type) {
-		ObjectMetadata om = new ObjectMetadata();
-		om.setContentType(mimeType);
-		om.setContentLength(size);
-		
-		String path = id + "/" + type + "/" + dateUtils.formatDateTimeSSS(new Date()) + getExtFileName(mimeType);
-		PutObjectRequest putObjectRequest = new PutObjectRequest(this.bucketName, path, is, om);
-		PutObjectResult putObjectResult = cosClient.putObject(putObjectRequest);
-		
-		return path;
-	}
-	
-	public String upload(String mimeType, String base64Str, long size, long id, String type) {
-		return this.upload(mimeType, new ByteArrayInputStream(Base64.decodeBase64(base64Str)), size, id, type);
-	}
-	public String upload(String mimeType, byte[] bytes, long size, long id, String type) {
-		return this.upload(mimeType, new ByteArrayInputStream(bytes), size, id, type);
-	}
-	
-	public String upload(String mimeType, byte[] bytes, long size,  String path) {
-		ObjectMetadata om = new ObjectMetadata();
-		om.setContentType(mimeType);
-		om.setContentLength(size);
-		PutObjectRequest putObjectRequest = new PutObjectRequest(this.bucketName, path, new ByteArrayInputStream(bytes), om);
-		PutObjectResult putObjectResult = cosClient.putObject(putObjectRequest);
+	public String upload(String path, String mimeType, InputStream is) {
+		try {
+			ObjectMetadata om = new ObjectMetadata();
+			om.setContentType(mimeType);
+			om.setContentLength(is.available());
+			PutObjectRequest putObjectRequest = new PutObjectRequest(this.bucketName, path, is, om);
+			PutObjectResult putObjectResult = cosClient.putObject(putObjectRequest);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 		return path;
 	}
 
-	public byte[] download(String resourcePath) {
+	public InputStream download(String resourcePath) {
 		// 指定要下载的文件所在的 bucket 和对象键
-		COSObject cosObject = cosClient.getObject(this.bucketName, resourcePath);
-		
-		
-		byte[] result = null;
+		return Optional.ofNullable(cosClient.getObject(this.bucketName, resourcePath))
+			.map(COSObject::getObjectContent)
+			.orElse(null);
+		/*byte[] result = null;
 		
 		try {
 			InputStream in = cosObject.getObjectContent();
@@ -90,6 +78,7 @@ public class QCloudCOSComponent {
 
 		}
 		return result;
+		*/
 	}
 
 	public void delete(String resourcePath) {
