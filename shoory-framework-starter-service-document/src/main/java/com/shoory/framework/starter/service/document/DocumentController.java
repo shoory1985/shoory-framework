@@ -43,7 +43,12 @@ public class DocumentController {
 	public SimpleUrlHandlerMapping StaticHandlerMapping(ResourceHttpRequestHandler handler) {
 		SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
 		mapping.setOrder(Ordered.HIGHEST_PRECEDENCE + 100);
-		mapping.setUrlMap(Collections.singletonMap("**/*.*", handler));
+	
+		Map<String, ResourceHttpRequestHandler> urlMap = new HashMap<String, ResourceHttpRequestHandler>();
+		urlMap.put("doc/*.*", handler);
+		urlMap.put("doc/**/*.*", handler);
+		mapping.setUrlMap(urlMap);
+		
 		return mapping;
 	}
 	
