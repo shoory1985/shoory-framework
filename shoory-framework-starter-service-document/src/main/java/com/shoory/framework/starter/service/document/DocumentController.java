@@ -45,8 +45,8 @@ public class DocumentController {
 		mapping.setOrder(Ordered.HIGHEST_PRECEDENCE + 100);
 	
 		Map<String, ResourceHttpRequestHandler> urlMap = new HashMap<String, ResourceHttpRequestHandler>();
-		urlMap.put("doc/*.*", handler);
-		urlMap.put("doc/**/*.*", handler);
+		//urlMap.put("doc/*.*", handler);
+		//urlMap.put("doc/**/*.*", handler);
 		mapping.setUrlMap(urlMap);
 		
 		return mapping;
