@@ -39,19 +39,6 @@ public class DocumentController {
 	@Autowired
 	private PojoUtils pojoUtils;
 	
-	@Bean
-	public SimpleUrlHandlerMapping StaticHandlerMapping(ResourceHttpRequestHandler handler) {
-		SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
-		mapping.setOrder(Ordered.HIGHEST_PRECEDENCE + 100);
-	
-		Map<String, ResourceHttpRequestHandler> urlMap = new HashMap<String, ResourceHttpRequestHandler>();
-		//urlMap.put("doc/*.*", handler);
-		//urlMap.put("doc/**/*.*", handler);
-		mapping.setUrlMap(urlMap);
-		
-		return mapping;
-	}
-	
 
 	@GetMapping(value = "/doc/service", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public String serviceInfo(HttpServletRequest request, HttpServletResponse response) {
