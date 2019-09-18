@@ -196,4 +196,16 @@ public class DateUtils {
 		String  date = sdf.format(cal.getTime());  
 		return date;
 	}
+	/**
+	 * 根据日期（带时区）
+	 * @return
+	 */
+	public String getDateWithTimeZone(long time, int timezone) {
+		SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd");
+		TimeZone.setDefault(TimeZone.getTimeZone("GMT" + (timezone >= 0 ? "+" + timezone : timezone)));
+		Calendar cal = Calendar.getInstance();// 获取当前日期
+		cal.setTimeInMillis(time);
+		String  date = sdf.format(cal.getTime());  
+		return date;
+	}
 }
