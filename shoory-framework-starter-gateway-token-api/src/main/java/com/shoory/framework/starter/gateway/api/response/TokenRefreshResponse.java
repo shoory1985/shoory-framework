@@ -26,4 +26,8 @@ public class TokenRefreshResponse extends BaseResponse {
 	@ApiName("新的的刷新令牌")
 	@ApiRequired
 	private String refreshToken;
+
+	@ApiName("新的签名Key")
+	@ApiRequired
+	private String signKey;
 }

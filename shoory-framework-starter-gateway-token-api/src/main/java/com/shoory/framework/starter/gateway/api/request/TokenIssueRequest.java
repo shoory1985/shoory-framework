@@ -3,10 +3,9 @@ package com.shoory.framework.starter.gateway.api.request;
 import java.util.Set;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import com.shoory.framework.starter.api.annotation.ApiName;
 import com.shoory.framework.starter.api.annotation.ApiRequired;
