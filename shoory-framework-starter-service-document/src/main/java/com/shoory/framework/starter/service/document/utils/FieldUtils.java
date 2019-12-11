@@ -22,6 +22,7 @@ import com.shoory.framework.starter.api.annotation.ApiDescription;
 import com.shoory.framework.starter.api.annotation.ApiExamples;
 import com.shoory.framework.starter.api.annotation.ApiModel;
 import com.shoory.framework.starter.api.annotation.ApiName;
+import com.shoory.framework.starter.api.annotation.ApiRequired;
 import com.shoory.framework.starter.service.I18nComponent;
 import com.shoory.framework.starter.service.document.models.FieldInfos;
 import com.shoory.framework.starter.service.document.models.ModelInfos;
@@ -48,8 +49,10 @@ public class FieldUtils {
 		//是否必需
 		Optional.ofNullable(field.getAnnotation(NotNull.class)).ifPresent(
 				notNull -> fieldInfo.setRequired(true));
+		Optional.ofNullable(field.getAnnotation(ApiRequired.class)).ifPresent(
+				apiRequired -> fieldInfo.setRequired(true));
 		Optional.ofNullable(field.getAnnotation(NotBlank.class)).ifPresent(
-				notNull -> fieldInfo.setRequired(true));
+				notBlank -> fieldInfo.setRequired(true));
 		//描述
 		Optional.ofNullable(field.getAnnotation(ApiDescription.class)).ifPresent(
 				apiDescription -> fieldInfo.setDescription(apiDescription.value()));
