@@ -28,7 +28,6 @@ public @interface NullableNotBlank {
 class NullableNotBlankValidator implements ConstraintValidator<NullableNotBlank, String> {
 	@Override
 	public boolean isValid(String value, ConstraintValidatorContext context) {
-		return value == null || 
-				!value.isBlank();
+		return value == null || value.trim().length() > 0;
 	}
 }
