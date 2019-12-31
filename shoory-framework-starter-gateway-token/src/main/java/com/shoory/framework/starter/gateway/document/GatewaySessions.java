@@ -17,7 +17,7 @@ import lombok.Data;
  *
  */
 @Data
-@RedisHash(value = "gateway_sessions", timeToLive = 7200L)
+@RedisHash(value = "gateway_sessions", timeToLive = 8640000L)
 public class GatewaySessions implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
