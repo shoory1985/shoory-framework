@@ -21,50 +21,50 @@ public class WechatMpComponent {
 
 	@Value("${wechatmp.appId}")
 	private String appId;
-	
+
 	@Value("${wechatmp.appSecret}")
 	private String appSecret;
-	
-	private WxMaService service=null; 
-	private  WxMaMessageRouter router = null; 
-	
-    @Bean
-    public  WxMaService service() {
-        WxMaInMemoryConfig config = new WxMaInMemoryConfig();
-        config.setAppid(appId);
-        config.setSecret(appSecret);
-        config.setToken("");
-        config.setAesKey("");
-        service = new WxMaServiceImpl();
-        service.setWxMaConfig(config);
-        router=new WxMaMessageRouter(service);
-        return service; 		
-    }
-	
+
+	private WxMaService service = null;
+	private WxMaMessageRouter router = null;
+
+	@Bean
+	public WxMaService service() {
+		WxMaInMemoryConfig config = new WxMaInMemoryConfig();
+		config.setAppid(appId);
+		config.setSecret(appSecret);
+		config.setToken("");
+		config.setAesKey("");
+		service = new WxMaServiceImpl();
+		service.setWxMaConfig(config);
+		router = new WxMaMessageRouter(service);
+		return service;
+	}
+
 	public String getOpenId(String code) {
-		if(service==null) {
+		if (service == null) {
 			this.service();
 		}
-		String  openId=null;
+		String openId = null;
 		try {
-			WxMaJscode2SessionResult result=service.jsCode2SessionInfo(code);
-			if(result!=null) {
-				openId=result.getOpenid();
+			WxMaJscode2SessionResult result = service.jsCode2SessionInfo(code);
+			if (result != null) {
+				openId = result.getOpenid();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return openId;
 	}
-	
+
 	public WechatMpOpenIdAndUnionId getOpenIdAndUnionId(String code) {
-		if(service==null) {
+		if (service == null) {
 			this.service();
 		}
-		WechatMpOpenIdAndUnionId wechatMpOpenIdAndUnionId=null;
+		WechatMpOpenIdAndUnionId wechatMpOpenIdAndUnionId = null;
 		try {
-			WxMaJscode2SessionResult result=service.jsCode2SessionInfo(code);
-			wechatMpOpenIdAndUnionId=new WechatMpOpenIdAndUnionId();
+			WxMaJscode2SessionResult result = service.jsCode2SessionInfo(code);
+			wechatMpOpenIdAndUnionId = new WechatMpOpenIdAndUnionId();
 			wechatMpOpenIdAndUnionId.setOpenId(result.getOpenid());
 			wechatMpOpenIdAndUnionId.setUnionId(result.getUnionid());
 		} catch (Exception e) {
@@ -72,13 +72,13 @@ public class WechatMpComponent {
 		}
 		return wechatMpOpenIdAndUnionId;
 	}
-	
+
 	public WechatMpUserInfo getUserInfo(String sessionKey, String encryptedData, String ivStr) {
-		if(service==null) {
+		if (service == null) {
 			this.service();
 		}
-		WxMaUserInfo userInfo=service.getUserService().getUserInfo(sessionKey, encryptedData, ivStr);
-		WechatMpUserInfo wechatMpUserInfo=new WechatMpUserInfo();
+		WxMaUserInfo userInfo = service.getUserService().getUserInfo(sessionKey, encryptedData, ivStr);
+		WechatMpUserInfo wechatMpUserInfo = new WechatMpUserInfo();
 		wechatMpUserInfo.setAvatarUrl(userInfo.getAvatarUrl());
 		wechatMpUserInfo.setCity(userInfo.getCity());
 		wechatMpUserInfo.setCountry(userInfo.getCountry());
