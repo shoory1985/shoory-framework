@@ -91,4 +91,13 @@ public class WechatMpComponent {
 		wechatMpUserInfo.setWatermark(userInfo.getWatermark());
 		return wechatMpUserInfo;
 	}
+	
+
+	public String getMobile(String encryptedData) {
+		if (service == null) {
+			this.service();
+		}
+		return "";
+	}
+
 }
