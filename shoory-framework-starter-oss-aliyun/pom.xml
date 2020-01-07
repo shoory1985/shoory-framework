@@ -31,5 +31,11 @@
 			<artifactId>shoory-framework-starter-oss</artifactId>
 			<version>${shoory-framework.version}</version>
 		</dependency>
+		<dependency>
+		    <groupId>com.aliyun.oss</groupId>
+		    <artifactId>aliyun-sdk-oss</artifactId>
+		    <version>3.8.1</version>
+		</dependency>
+		
 	</dependencies>
 </project>

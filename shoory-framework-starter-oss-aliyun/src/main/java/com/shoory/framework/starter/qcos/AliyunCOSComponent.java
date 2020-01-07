@@ -1,56 +1,48 @@
 package com.shoory.framework.starter.qcos;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
-import java.util.Optional;
 
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Component;
 
+import com.aliyun.oss.OSS;
+import com.aliyun.oss.model.GetObjectRequest;
+import com.aliyun.oss.model.ObjectMetadata;
+import com.aliyun.oss.model.PutObjectRequest;
+import com.aliyun.oss.model.PutObjectResult;
 import com.shoory.framework.starter.oss.OssComponent;
-import com.shoory.framework.starter.utils.DateUtils;
 
 @Component
+@ConditionalOnBean(value=AliyunCOSConfig.class)
 public class AliyunCOSComponent implements OssComponent {
-	@Value("${bucket.name}")
-	public String bucketName;
-
-	public String getExtFileName(String mimeType) {
-		switch (mimeType.toLowerCase()) {
-		case "text/plain":
-			return ".txt";
-		case "image/jpeg":
-		case "image/jpg":
-			return ".jpg";
-		case "image/png":
-			return ".png";
-		case "image/gif":
-			return ".gif";
-		}
-		return "";
-	}
+	@Autowired 
+    private AliyunCOSConfigProperties configProperties;
+	@Autowired 
+    private OSS ossClient;
 
 	@Override
 	public String upload(String resourcePath, String mimeType, InputStream is) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			PutObjectRequest putObjectRequest = new PutObjectRequest(configProperties.getBucketName(),resourcePath , is);
+			ObjectMetadata om = new ObjectMetadata();
+			om.setContentType(mimeType);
+			om.setContentLength(is.available());
+			PutObjectResult result=ossClient.putObject(putObjectRequest);
+			return resourcePath;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public InputStream download(String resourcePath) {
-		// TODO Auto-generated method stub
-		return null;
+		return ossClient.getObject(new GetObjectRequest(configProperties.getBucketName(), resourcePath)).getObjectContent(); 
 	}
 
 	@Override
 	public void delete(String resourcePath) {
-		// TODO Auto-generated method stub
-		
+		ossClient.deleteObject(configProperties.getBucketName(), resourcePath);
 	}
-
 }
