@@ -22,11 +22,6 @@
 		</dependency>
 		<dependency>
 		  <groupId>com.github.binarywang</groupId>
-		  <artifactId>weixin-java-common</artifactId>
-		  <version>3.2.0</version>
-		</dependency>
-		<dependency>
-		  <groupId>com.github.binarywang</groupId>
 		  <artifactId>weixin-java-miniapp</artifactId>
 		  <version>3.6.0</version>
 		</dependency>

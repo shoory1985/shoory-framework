@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 import com.google.common.collect.Maps;
 
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
+import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 
 @Component
 public class WechatComponent {
@@ -23,7 +23,7 @@ public class WechatComponent {
 
 	@Bean
 	public WxMpService service() {
-		WxMpInMemoryConfigStorage configStorage = new WxMpInMemoryConfigStorage();
+		WxMpDefaultConfigImpl configStorage = new WxMpDefaultConfigImpl();
 		configStorage.setAppId(this.appId);
 		configStorage.setSecret(this.appSecret);
 		configStorage.setToken("");
