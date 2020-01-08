@@ -17,8 +17,7 @@ public class WechatMpComponent {
 	private WxMaService service; 
 	
 	public WxMaJscode2SessionResult code2Session(String code) throws WxErrorException {
-		WxMaJscode2SessionResult result = null;
-		return	result = service.jsCode2SessionInfo(code);
+		return service.jsCode2SessionInfo(code);
 	}
 
 	public WxMaUserInfo getUserInfo(String sessionKey, String encryptedData, String ivStr) {
