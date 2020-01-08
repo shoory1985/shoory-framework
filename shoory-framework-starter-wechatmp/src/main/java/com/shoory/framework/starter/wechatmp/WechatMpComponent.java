@@ -1,6 +1,8 @@
 package com.shoory.framework.starter.wechatmp;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
@@ -13,38 +15,12 @@ import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import cn.binarywang.wx.miniapp.message.WxMaMessageRouter;
 
 @Component
+@ConditionalOnBean(value= WechatMpConfig.class)
 public class WechatMpComponent {
-	@Bean
-	public WechatMpComponent getWechatMpComponent() {
-		return new WechatMpComponent();
-	}
-
-	@Value("${wechatmp.appId}")
-	private String appId;
-
-	@Value("${wechatmp.appSecret}")
-	private String appSecret;
-
-	private WxMaService service = null;
-	private WxMaMessageRouter router = null;
-
-	@Bean
-	public WxMaService service() {
-		WxMaDefaultConfigImpl config = new WxMaDefaultConfigImpl();
-		config.setAppid(appId);
-		config.setSecret(appSecret);
-		config.setToken("");
-		config.setAesKey("");
-		service = new WxMaServiceImpl();
-		service.setWxMaConfig(config);
-		router = new WxMaMessageRouter(service);
-		return service;
-	}
-
+	@Autowired
+	private WxMaService service; 
+	
 	public String getOpenId(String code) {
-		if (service == null) {
-			this.service();
-		}
 		String openId = null;
 		try {
 			WxMaJscode2SessionResult result = service.jsCode2SessionInfo(code);
@@ -58,9 +34,6 @@ public class WechatMpComponent {
 	}
 
 	public WechatMpOpenIdAndUnionId getOpenIdAndUnionId(String code) {
-		if (service == null) {
-			this.service();
-		}
 		WechatMpOpenIdAndUnionId wechatMpOpenIdAndUnionId = null;
 		try {
 			WxMaJscode2SessionResult result = service.jsCode2SessionInfo(code);
@@ -74,9 +47,6 @@ public class WechatMpComponent {
 	}
 
 	public WechatMpUserInfo getUserInfo(String sessionKey, String encryptedData, String ivStr) {
-		if (service == null) {
-			this.service();
-		}
 		WxMaUserInfo userInfo = service.getUserService().getUserInfo(sessionKey, encryptedData, ivStr);
 		WechatMpUserInfo wechatMpUserInfo = new WechatMpUserInfo();
 		wechatMpUserInfo.setAvatarUrl(userInfo.getAvatarUrl());
@@ -94,10 +64,7 @@ public class WechatMpComponent {
 	
 
 	public WxMaPhoneNumberInfo getMobile(String sessionKey, String encryptedData, String ivStr) {
-		if (service != null) {
-			return	this.service().getUserService().getPhoneNoInfo(sessionKey, encryptedData, ivStr);
-		}
-		return null;
+		return	service.getUserService().getPhoneNoInfo(sessionKey, encryptedData, ivStr);
 	}
 
 }
