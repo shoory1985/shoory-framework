@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
+import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
-import cn.binarywang.wx.miniapp.config.WxMaInMemoryConfig;
+import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import cn.binarywang.wx.miniapp.message.WxMaMessageRouter;
-import me.chanjar.weixin.common.error.WxErrorException;
 
 @Component
 public class WechatMpComponent {
@@ -30,7 +30,7 @@ public class WechatMpComponent {
 
 	@Bean
 	public WxMaService service() {
-		WxMaInMemoryConfig config = new WxMaInMemoryConfig();
+		WxMaDefaultConfigImpl config = new WxMaDefaultConfigImpl();
 		config.setAppid(appId);
 		config.setSecret(appSecret);
 		config.setToken("");
@@ -93,11 +93,11 @@ public class WechatMpComponent {
 	}
 	
 
-	public String getMobile(String encryptedData) {
-		if (service == null) {
-			this.service();
+	public WxMaPhoneNumberInfo getMobile(String sessionKey, String encryptedData, String ivStr) {
+		if (service != null) {
+			return	this.service().getUserService().getPhoneNoInfo(sessionKey, encryptedData, ivStr);
 		}
-		return "";
+		return null;
 	}
 
 }
