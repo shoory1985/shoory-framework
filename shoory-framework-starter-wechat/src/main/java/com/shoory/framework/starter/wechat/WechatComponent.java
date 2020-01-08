@@ -18,7 +18,7 @@ public class WechatComponent {
 
 	public WxMpUser getUserInfo(String code) throws WxErrorException {
 		WxMpOAuth2AccessToken accessToken = service.oauth2getAccessToken(code);
-		WxMpUser user = service.oauth2getUserInfo(accessToken, null);
-		return user;
+		return service.oauth2getUserInfo(accessToken, null);
+		
 	}
 }
