@@ -4,4 +4,9 @@
 .svn
 _svn
 /target/
+/.settings/
 /target
+.classpath
+.project
+/.settings/
+/.settings

@@ -3,6 +3,10 @@
 .git
 .svn
 _svn
+.classpath
+.project
 /target/
+/.settings/
 /target
-
+/.settings/
+/.settings
