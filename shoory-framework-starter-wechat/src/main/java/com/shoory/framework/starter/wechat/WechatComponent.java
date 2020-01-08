@@ -21,8 +21,4 @@ public class WechatComponent {
 		WxMpUser user = service.oauth2getUserInfo(accessToken, null);
 		return user;
 	}
-
-	public WechatOpenIdAndUnionId getOpenIdAndUnionId(String code) {
-		return null;
-	}
 }

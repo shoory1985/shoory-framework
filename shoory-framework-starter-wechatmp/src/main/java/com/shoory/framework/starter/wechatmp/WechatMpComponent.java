@@ -21,14 +21,11 @@ public class WechatMpComponent {
 		return	result = service.jsCode2SessionInfo(code);
 	}
 
-
-
 	public WxMaUserInfo getUserInfo(String sessionKey, String encryptedData, String ivStr) {
 		WxMaUserInfo userInfo = service.getUserService().getUserInfo(sessionKey, encryptedData, ivStr);
 		return userInfo;
 	}
 	
-
 	public WxMaPhoneNumberInfo getMobile(String sessionKey, String encryptedData, String ivStr) {
 		return	service.getUserService().getPhoneNoInfo(sessionKey, encryptedData, ivStr);
 	}
