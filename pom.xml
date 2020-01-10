@@ -28,8 +28,6 @@
 		<module>shoory-framework-starter-wechat</module>
 		<module>shoory-framework-starter-wechatmp</module>
 		<module>shoory-framework-starter-gateway-token-api</module>
-		<module>shoory-framework-starter-gateway-token</module>
-		<module>shoory-framework-starter-gateway</module>
 	</modules>
 
 	<properties>
