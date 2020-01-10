@@ -28,5 +28,9 @@ public class WechatMpComponent {
 	public WxMaPhoneNumberInfo getMobile(String sessionKey, String encryptedData, String ivStr) {
 		return	service.getUserService().getPhoneNoInfo(sessionKey, encryptedData, ivStr);
 	}
+	
+	public WxMaService service() {
+		return service;
+	}
 
 }

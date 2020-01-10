@@ -21,4 +21,8 @@ public class WechatComponent {
 		return service.oauth2getUserInfo(accessToken, null);
 		
 	}
+
+	public WxMpService service() {
+		return service;
+	}
 }
