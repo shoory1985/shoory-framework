@@ -5,7 +5,7 @@ import javax.validation.ConstraintValidatorContext;
 
 import com.shoory.framework.starter.api.validator.annotation.NullableLength;
 
-class NullableLengthValidator implements ConstraintValidator<NullableLength, String> {
+public class NullableLengthValidator implements ConstraintValidator<NullableLength, String> {
 	private int min;
 	private int max;
     /**

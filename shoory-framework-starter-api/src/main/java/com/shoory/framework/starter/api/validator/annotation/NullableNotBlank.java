@@ -13,6 +13,8 @@ import javax.validation.Payload;
 
 import org.springframework.util.StringUtils;
 
+import com.shoory.framework.starter.api.validator.NullableNotBlankValidator;
+
 //注解可以作用的位置：字段、方法
 @Target({ ElementType.FIELD, ElementType.METHOD })
 //运行时注解
@@ -23,11 +25,4 @@ public @interface NullableNotBlank {
 	String message();
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
-}
-
-class NullableNotBlankValidator implements ConstraintValidator<NullableNotBlank, String> {
-	@Override
-	public boolean isValid(String value, ConstraintValidatorContext context) {
-		return value == null || value.trim().length() > 0;
-	}
 }

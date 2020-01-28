@@ -15,7 +15,7 @@ import org.springframework.util.StringUtils;
 
 import com.shoory.framework.starter.api.validator.annotation.NullableNotEmpty;
 
-class NullableNotEmptyValidator implements ConstraintValidator<NullableNotEmpty, Object> {
+public class NullableNotEmptyValidator implements ConstraintValidator<NullableNotEmpty, Object> {
 	@Override
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
 		return value == null || 

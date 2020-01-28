@@ -10,6 +10,7 @@ import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.Payload;
+import com.shoory.framework.starter.api.validator.NullableLengthValidator;
 
 //注解可以作用的位置：字段、方法
 @Target({ ElementType.FIELD, ElementType.METHOD })

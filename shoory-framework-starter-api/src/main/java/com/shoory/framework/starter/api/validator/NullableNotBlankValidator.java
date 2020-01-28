@@ -15,7 +15,7 @@ import org.springframework.util.StringUtils;
 
 import com.shoory.framework.starter.api.validator.annotation.NullableNotBlank;
 
-class NullableNotBlankValidator implements ConstraintValidator<NullableNotBlank, String> {
+public class NullableNotBlankValidator implements ConstraintValidator<NullableNotBlank, String> {
 	@Override
 	public boolean isValid(String value, ConstraintValidatorContext context) {
 		return value == null || value.trim().length() > 0;

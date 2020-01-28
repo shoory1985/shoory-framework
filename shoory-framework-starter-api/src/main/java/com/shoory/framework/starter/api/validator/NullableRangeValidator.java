@@ -13,7 +13,7 @@ import javax.validation.Payload;
 
 import com.shoory.framework.starter.api.validator.annotation.NullableRange;
 
-class NullOrRangeValidator implements ConstraintValidator<NullableRange, Long> {
+public class NullableRangeValidator implements ConstraintValidator<NullableRange, Long> {
 	private long min;
 	private long max;
     /**
