@@ -16,7 +16,7 @@ import javax.validation.Payload;
 //运行时注解
 @Retention(RetentionPolicy.RUNTIME)
 //制定注解判断逻辑所在的类，这个类必须实现了ConstraintValidator接口
-@Constraint(validatedBy = NullOrLengthValidator.class)
+@Constraint(validatedBy = NullableLengthValidator.class)
 public @interface NullableLength {
 	String message();
 
@@ -28,27 +28,3 @@ public @interface NullableLength {
 	Class<? extends Payload>[] payload() default {};
 }
 
-class NullOrLengthValidator implements ConstraintValidator<NullableLength, String> {
-	private int min;
-	private int max;
-    /**
-     * 初始化
-     *
-     * @param constraintAnnotation
-     */
-    @Override
-    public void initialize(NullableLength constraintAnnotation) {
-        //获取禁止的词汇
-        this.min = constraintAnnotation.min();
-        this.max = constraintAnnotation.max();
-    }
-    
-	@Override
-	public boolean isValid(String value, ConstraintValidatorContext context) {
-		return value == null ||
-				value.length() >= this.min &&
-				value.length() <= this.max;
-	}
-
-
-}
