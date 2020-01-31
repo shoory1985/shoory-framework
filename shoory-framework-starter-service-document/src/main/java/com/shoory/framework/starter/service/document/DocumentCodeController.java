@@ -45,8 +45,8 @@ public class DocumentCodeController {
 	private Map<String, String> mapDict =  new HashMap<String, String>();
 	private ThreadLocal<Integer> lineNumber = new ThreadLocal<Integer>();
 
-	@GetMapping(value = "/doc/code/{lang}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public String codeLang(@PathVariable("lang") String lang, HttpServletRequest request,
+	@GetMapping(value = "/doc/dict/{lang}", produces = MediaType.TEXT_PLAIN_VALUE)
+	public String dictLang(@PathVariable("lang") String lang, HttpServletRequest request,
 			HttpServletResponse response) {
 		documentUtils.ready();
 		
@@ -61,9 +61,10 @@ public class DocumentCodeController {
 						.forEach(code -> {
 							int line = lineNumber.get();
 							if (line % 9 == 0) {
-								sb.append(String.format("#%s Line %d", lang, line + 1));
+								sb.append(String.format("#Line(%d)\r\n", line / 9 * 10 + 1));
 							}
-							sb.append(String.format("%s = %s\r\n", code, i18nComponent.getMessage(code, lang)));
+							sb.append(String.format("%s = %s\r\n", code, 
+									Optional.ofNullable(i18nComponent.getMessage(code, lang)).orElse("")));
 							lineNumber.set(lineNumber.get() + 1);
 						});
 					this.mapDict.put(lang, sb.toString());
