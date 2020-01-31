@@ -158,20 +158,30 @@ public class FieldUtils {
 		//预置
 		String[] GENERAL_CODES = new String[] {"SUCCESS", "ERROR_INTERNAL"};
 		Arrays.stream(GENERAL_CODES)
-			.forEach(code -> list.add(new ReturnInfos(code, i18nComponent.getMessage(code,"zh_CN"))));
+			.forEach(code -> {
+				list.add(new ReturnInfos(code, i18nComponent.getMessage(code,"zh_CN")));
+				documentUtils.getMapCode().put(code, 
+					Optional.ofNullable(documentUtils.getMapCode().get(code))
+						.map(count -> count + 1)
+						.orElse(1));
+			});
 		
 		Arrays.stream(requestClass.getDeclaredFields())
 			.filter(field -> !field.getName().equalsIgnoreCase("serialVersionUID"))
 			.filter(field ->Modifier.isFinal(field.getModifiers())&&Modifier.isStatic(field.getModifiers())&&field.getType()==String.class)
 			.sorted(Comparator.comparing(Field::getName))
 			.forEach(field ->{
-				String value;
+				String code;
 				try {
-					value = (String) field.get(String.class);
-					} catch (Exception e) {
-					value=field.getName();
+					code = (String) field.get(String.class);
+				} catch (Exception e) {
+					code = field.getName();
 				}
-				list.add(new ReturnInfos(value, i18nComponent.getMessage(value,"zh_CN")));
+				list.add(new ReturnInfos(code, i18nComponent.getMessage(code, "zh_CN")));
+				documentUtils.getMapCode().put(code, 
+					Optional.ofNullable(documentUtils.getMapCode().get(code))
+						.map(count -> count + 1)
+						.orElse(1));
 			});
 		
 		return list.toArray(new ReturnInfos[list.size()]);

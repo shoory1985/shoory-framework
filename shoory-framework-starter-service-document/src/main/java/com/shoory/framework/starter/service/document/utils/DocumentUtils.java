@@ -2,6 +2,7 @@ package com.shoory.framework.starter.service.document.utils;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +35,8 @@ public class DocumentUtils {
 	private Map<String, MethodInfos> mapMethod = new HashMap<String, MethodInfos>();
 	@Getter
 	private Map<String, ModelInfos> mapModel = new HashMap<String, ModelInfos>();
+	@Getter
+	private Map<String, Integer> mapCode = new HashMap<String, Integer>();
 
 	@Autowired
 	private I18nComponent i18nComponent;
@@ -43,7 +46,7 @@ public class DocumentUtils {
 		return new DocumentUtils();
 	}
 
-	public boolean ready() {
+	public synchronized boolean ready() {
 		if (!inited) {
 
 			//填充方法
