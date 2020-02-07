@@ -23,17 +23,17 @@ import org.springframework.stereotype.Component;
 import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;
 import com.github.qcloudsms.httpclient.HTTPException;
-import com.shoory.framework.starter.sms.SmsComponent;
+import com.shoory.framework.starter.sms.SmsSender;
 
 @Component
-public class TencentCloudSmsSender implements SmsComponent {
+public class TencentCloudSmsSender implements SmsSender {
 	@Value("${tencentcloud.sms.appid}")
 	private int appid;
 	@Value("${tencentcloud.sms.appkey}")
 	private String appkey;
 
 	@Bean
-	public static SmsComponent sender() {
+	public static SmsSender sender() {
 		return new TencentCloudSmsSender();
 	}
 
