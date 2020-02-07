@@ -33,6 +33,6 @@ public class SaltyFactory {
 	}
 	
 	public String produceNum(int length) {
-		return String.valueOf(Math.round(((int)(Math.random() * (9 * Math.pow(10, length) - 1)) + Math.pow(10, length))));
+		return String.valueOf(Math.round(((int)(Math.random() * (9 * Math.pow(10, length - 1))) + Math.pow(10, length - 1))));
 	}
 }
