@@ -32,11 +32,6 @@ public class TencentCloudSmsSender implements SmsSender {
 	@Value("${tencentcloud.sms.appkey}")
 	private String appkey;
 
-	@Bean
-	public static SmsSender sender() {
-		return new TencentCloudSmsSender();
-	}
-
 	@Override
 	public boolean sendSms(String nationCode, String phoneNumber, String templateId, String[] params, String smsSign) {
 			  SmsSingleSender ssender = new SmsSingleSender(appid, appkey);
