@@ -23,11 +23,6 @@ public class AliyunCOSComponent implements OssComponent {
 	@Autowired
 	private OSS ossClient;
 
-	@Bean
-	public static OssComponent bean() {
-		return new AliyunCOSComponent();
-	}
-	
 	@Override
 	public String upload(String resourcePath, String mimeType, InputStream is) {
 		try {
