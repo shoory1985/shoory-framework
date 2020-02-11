@@ -21,7 +21,7 @@ public class AliyunCOSComponent implements OssComponent {
 	@Autowired 
     private AliyunCOSConfigProperties configProperties;
 	@Autowired
-	private OSSClient ossClient;
+	private OSS ossClient;
 
 	@Bean
 	public static OssComponent bean() {
