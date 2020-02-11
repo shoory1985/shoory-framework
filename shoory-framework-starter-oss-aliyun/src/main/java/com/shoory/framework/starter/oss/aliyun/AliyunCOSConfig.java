@@ -1,4 +1,4 @@
-package com.shoory.framework.starter.qcos;
+package com.shoory.framework.starter.oss.aliyun;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;

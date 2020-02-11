@@ -1,4 +1,4 @@
-package com.shoory.framework.starter.qcos;
+package com.shoory.framework.starter.oss.aliyun;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
