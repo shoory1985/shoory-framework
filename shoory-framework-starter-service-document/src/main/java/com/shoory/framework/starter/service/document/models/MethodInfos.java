@@ -13,7 +13,7 @@ public class MethodInfos {
 	private String method = "";
 	private String name = "";
 	private String description = "";
-	private String module = "默认";
+	private String module = "";
 	
 	private FieldInfos[] requestFields;
 	private FieldInfos[] responseFields;
