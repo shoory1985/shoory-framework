@@ -28,7 +28,7 @@ import reactor.core.publisher.Mono;
 public class AuthFilter implements GlobalFilter, Ordered {
 	private final String ERROR_FORBIDDEN = "{\"code\":\"ERROR_FORBIDDEN\"}";
 	private final String ERROR_ACCESS_TOKEN_MISSED = "{\"code\":\"ERROR_ACCESS_TOKEN_MISSED\"}";
-	private final String ERROR_INVALID_ACCESS_TOKEN = "{\"code\":\"ERROR_INVALID_ACCESS_TOKEN\"}";
+	private final String ERROR_INVALID_ACCESS_TOKEN = "{\"code\":\"ERROR_INVALID_ACCESS_TOKEN\", \"message\":\"当前会话已经失效，请重新登录。\"}";
 	private final String ERROR_SIGNATURE_MISSED = "{\"code\":\"ERROR_SIGNATURE_MISSED\"}";
 	private final String ERROR_INVALID_SIGNATURE = "{\"code\":\"ERROR_INVALID_SIGNATURE\"}";
 
