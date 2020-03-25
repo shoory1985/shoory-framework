@@ -86,4 +86,10 @@ public class QCloudCOSComponent implements OssComponent {
 		cosClient.deleteObject(bucketName, resourcePath);
 	}
 
+	@Override
+	public boolean isExisted(String resourcePath) {
+		// TODO Auto-generated method stub
+		return cosClient.getObject(this.bucketName, resourcePath) != null;
+	}
+
 }

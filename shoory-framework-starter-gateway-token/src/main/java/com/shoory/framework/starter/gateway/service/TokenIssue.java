@@ -27,10 +27,10 @@ public class TokenIssue extends BaseService<TokenIssueRequest, TokenIssueRespons
 	public TokenIssueResponse invoke(TokenIssueRequest request) {
 		// 作废旧的
 		{
-//			List<GatewaySessions> list = gatewaySessionRepository.findByCredential(request.getCredential());
-//			for (GatewaySessions item : list) {
-//				gatewaySessionRepository.delete(item);
-//			}
+			List<GatewaySessions> list = gatewaySessionRepository.findByCredential(request.getCredential());
+			for (GatewaySessions item : list) {
+				gatewaySessionRepository.delete(item);
+			}
 		}
 
 		// 签发新的
