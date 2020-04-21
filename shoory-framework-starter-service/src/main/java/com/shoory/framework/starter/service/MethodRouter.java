@@ -46,8 +46,15 @@ public class MethodRouter {
 					userBaseRequest.set_credential(credential);
 				}
 			}
+
+			//入参打印
+			logger.info(methodName + ">>>>" + json);
+			String responseString = pojoUtils.toJson(this.baseInvoke(method, request));
+			//出参打印
+			logger.info(methodName + "<<<<" + responseString);
 			
-			return pojoUtils.toJson(this.baseInvoke(method, request));
+			//入参打印
+			return responseString;
 		} catch (SysException se) {
 			BaseResponse response = new BaseResponse();
 			response.setCode(BaseRequest.ERROR_INTERNAL);
