@@ -28,7 +28,6 @@ public class MethodRouter {
 	private I18nComponent i18nComponent;
 
 	public String jsonInvoke(String methodName, String json) {
-		logger.trace(json);
 		try {
 			BaseService method = this.getMethod(methodName);
 			// 入参
