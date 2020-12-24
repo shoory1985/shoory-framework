@@ -47,4 +47,10 @@ public class AliyunCOSComponent implements OssComponent {
 	public void delete(String resourcePath) {
 		ossClient.deleteObject(configProperties.getBucketName(), resourcePath);
 	}
+
+	@Override
+	public boolean isExisted(String resourcePath) {
+		// TODO Auto-generated method stub
+		return ossClient.doesObjectExist(new GetObjectRequest(configProperties.getBucketName(), resourcePath));
+	}
 }

@@ -9,11 +9,11 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import com.shoory.framework.starter.api.ApiInfo;
+import com.shoory.framework.starter.api.annotation.Api;
 import com.shoory.framework.starter.api.annotation.ApiDescription;
 import com.shoory.framework.starter.api.annotation.ApiName;
 import com.shoory.framework.starter.service.document.models.MethodInfos;
@@ -37,7 +37,7 @@ public class ServiceUtils {
 	public  ServiceInfos getInfo(Class<?> api) {
 		ServiceInfos ret = new ServiceInfos();
 
-		Optional.ofNullable(api.getAnnotation(FeignClient.class))
+		Optional.ofNullable(api.getAnnotation(Api.class))
 			.ifPresent(feignClient -> ret.setService(feignClient.value()));
 		Optional.ofNullable(api.getAnnotation(ApiName.class))
 			.ifPresent(apiName -> ret.setName(apiName.value()));
