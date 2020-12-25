@@ -11,6 +11,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.shoory.framework.starter.api.request.UserBaseRequest;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.shoory.framework.starter.api.constants.BizException;
 import com.shoory.framework.starter.api.constants.SysException;
 import com.shoory.framework.starter.api.request.BaseRequest;
@@ -26,6 +28,8 @@ public class MethodRouter {
 	private PojoUtils pojoUtils;
 	@Autowired
 	private I18nComponent i18nComponent;
+	@Autowired
+	private JwtUtils jwtUtils;
 
 	public String jsonInvoke(String methodName, String json) {
 		try {
@@ -36,15 +40,26 @@ public class MethodRouter {
 					.getRequestAttributes();
 			request.set_clientAddress(attributes.getRequest().getHeader("ClientAddress"));
 
-			// 通过zuul访问时用zuul header传过来的身份盖掉json中的身份
+			// 
 			if (request instanceof UserBaseRequest) {
-				String credential = attributes.getRequest().getHeader("Credential");
+				//拣出JWT
+				String token = attributes.getRequest().getHeader("Authorization");
+				if (StringUtils.isBlank(token)) {
+					throw new BizException(UserBaseRequest.ERROR_ACCESS_TOKEN_MISSED);
+				}
+				//检查令牌有效性（合法性和是否过期）
+				jwtUtils.checkAccessToken(token);
 
-				// 如果2个zuul header都为空，要么是Pub公开方法，要么是内部调用，不
-				if (credential != null && credential.length() > 0) {
+				DecodedJWT jwt = JWT.decode(token);
+				String credential = jwt.getSubject();
+				if (StringUtils.isBlank(credential)) {
+					throw new BizException(UserBaseRequest.ERROR_INVALID_CREDENTIAL);
+				} else {
+					//注入入参
 					UserBaseRequest userBaseRequest = (UserBaseRequest) request;
 					userBaseRequest.set_credential(credential);
 				}
+				
 			}
 
 			//入参打印

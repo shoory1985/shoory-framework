@@ -16,7 +16,11 @@ public class UserBaseRequest extends BaseRequest {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	public static final String ERROR_ACCESS_TOKEN_EXPIRED = "ERROR_ACCESS_TOKEN_EXPIRED";
+	public static final String ERROR_INVALID_ACCESS_TOKEN = "ERROR_INVALID_ACCESS_TOKEN";
+	public static final String ERROR_ACCESS_TOKEN_MISSED = "ERROR_ACCESS_TOKEN_MISSED";
+	public static final String ERROR_INVALID_CREDENTIAL = "ERROR_INVALID_CREDENTIAL";
+	
 	@ApiHidden
 	@NotNull(message = "无授权")
 	@NotBlank(message = "无授权")
