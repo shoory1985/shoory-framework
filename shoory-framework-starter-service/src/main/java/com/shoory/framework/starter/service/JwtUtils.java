@@ -19,7 +19,7 @@ import com.shoory.framework.starter.api.response.BaseResponse;
 
 @Component
 public class JwtUtils {
-	@Value("${jwt.secret:}")
+	@Value("${jwt.secret}")
 	private String jwtSecret;
 	@Value("${jwt.accessTokenSeconds:7200}")
 	private long jwtAccessTokenSeconds;
