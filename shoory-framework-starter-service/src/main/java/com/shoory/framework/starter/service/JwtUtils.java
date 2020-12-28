@@ -54,9 +54,9 @@ public class JwtUtils {
 			}
 			jwtVerifer.verify(accessToken);
 		} catch (TokenExpiredException e) {
-			throw new SysException(UserBaseRequest.ERROR_ACCESS_TOKEN_EXPIRED, "");
+			throw new BizException(UserBaseRequest.ERROR_ACCESS_TOKEN_EXPIRED);
 		} catch (Exception e) {
-			throw new SysException(UserBaseRequest.ERROR_INVALID_ACCESS_TOKEN, "");
+			throw new BizException(UserBaseRequest.ERROR_INVALID_ACCESS_TOKEN);
 		}
 	}
 	public boolean checkRefreshToken(String accessToken, String key, String refreshToken) {
