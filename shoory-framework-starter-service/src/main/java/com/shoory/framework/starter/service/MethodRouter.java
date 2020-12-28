@@ -45,7 +45,7 @@ public class MethodRouter {
 				//拣出JWT
 				String token = attributes.getRequest().getHeader("Authorization");
 				if (StringUtils.isBlank(token)) {
-					throw new BizException(UserBaseRequest.ERROR_ACCESS_TOKEN_MISSED);
+					throw new SysException(UserBaseRequest.ERROR_ACCESS_TOKEN_MISSED, "");
 				}
 				//检查令牌有效性（合法性和是否过期）
 				jwtUtils.checkAccessToken(token);
@@ -53,7 +53,7 @@ public class MethodRouter {
 				DecodedJWT jwt = JWT.decode(token);
 				String credential = jwt.getSubject();
 				if (StringUtils.isBlank(credential)) {
-					throw new BizException(UserBaseRequest.ERROR_INVALID_CREDENTIAL);
+					throw new SysException(UserBaseRequest.ERROR_INVALID_CREDENTIAL, "");
 				} else {
 					//注入入参
 					UserBaseRequest userBaseRequest = (UserBaseRequest) request;

@@ -14,6 +14,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.shoory.framework.starter.api.constants.BizException;
+import com.shoory.framework.starter.api.constants.SysException;
 import com.shoory.framework.starter.api.request.UserBaseRequest;
 import com.shoory.framework.starter.api.response.BaseResponse;
 
@@ -53,9 +54,9 @@ public class JwtUtils {
 			}
 			jwtVerifer.verify(accessToken);
 		} catch (TokenExpiredException e) {
-			throw new BizException(UserBaseRequest.ERROR_ACCESS_TOKEN_EXPIRED);
+			throw new SysException(UserBaseRequest.ERROR_ACCESS_TOKEN_EXPIRED, "");
 		} catch (Exception e) {
-			throw new BizException(UserBaseRequest.ERROR_INVALID_ACCESS_TOKEN);
+			throw new SysException(UserBaseRequest.ERROR_INVALID_ACCESS_TOKEN, "");
 		}
 	}
 	public boolean checkRefreshToken(String accessToken, String key, String refreshToken) {
