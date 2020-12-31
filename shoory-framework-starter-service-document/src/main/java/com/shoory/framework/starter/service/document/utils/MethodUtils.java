@@ -46,10 +46,10 @@ public class MethodUtils {
 					ret.setReturns(fieldUtils.getList(classRequest));
 					//如果module为空，取request所在的包倒数第二段（第一段是request）
 					if (StringUtils.isBlank(ret.getModule())) {
-						String[] pieces = classRequest.getPackageName().split("\\.");
-						if (pieces.length - 2 >= 0) {
-							ret.setModule(pieces[pieces.length - 2]);
-						}
+//						String[] pieces = classRequest.getPackageName().split("\\.");
+//						if (pieces.length - 2 >= 0) {
+//							ret.setModule(pieces[pieces.length - 2]);
+//						}
 					}
 				});
 
