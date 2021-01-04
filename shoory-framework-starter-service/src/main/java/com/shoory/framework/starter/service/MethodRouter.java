@@ -43,7 +43,8 @@ public class MethodRouter {
 			// 
 			if (request instanceof UserBaseRequest) {
 				//拣出JWT
-				String token = attributes.getRequest().getHeader("Authorization");
+				String token = Optional.ofNullable(attributes.getRequest().getHeader("Authorization"))
+						.orElseGet(() -> attributes.getRequest().getHeader("Access-Token"));
 				if (StringUtils.isBlank(token)) {
 					throw new BizException(UserBaseRequest.ERROR_ACCESS_TOKEN_MISSED);
 				}
