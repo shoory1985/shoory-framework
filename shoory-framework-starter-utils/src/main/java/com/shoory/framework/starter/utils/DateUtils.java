@@ -202,7 +202,7 @@ public class DateUtils {
 	 */
 	public String formatWithTimeZone(String pattern, long time, int timezone) {
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-		TimeZone.setDefault(TimeZone.getTimeZone("GMT" + (timezone >= 0 ? "+" + timezone : timezone)));
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT" + (timezone >= 0 ? "+" + timezone : timezone)));
 		Calendar cal = Calendar.getInstance();// 获取当前日期
 		cal.setTimeInMillis(time);
 		String  date = sdf.format(cal.getTime());  
