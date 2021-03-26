@@ -19,12 +19,14 @@ public class MinioConfig {
 	public String region;
 	@Value("${oss.minio.bucket.port}")
 	public int port;
+	@Value("${oss.minio.bucket.secure:false}")
+	public boolean secure;
 	
 
 	@Bean
 	MinioClient getMinioClient() {
 		try {
-			return new MinioClient(this.region, this.port, this.accessKey, this.secretKey);
+			return new MinioClient(this.region, this.port, this.accessKey, this.secretKey, this.secure);
 		} catch (InvalidEndpointException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
