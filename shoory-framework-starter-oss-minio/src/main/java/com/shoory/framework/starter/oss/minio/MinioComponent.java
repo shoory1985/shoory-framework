@@ -1,4 +1,4 @@
-package com.shoory.framework.starter.qcos;
+package com.shoory.framework.starter.oss.minio;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -28,7 +28,7 @@ import io.minio.errors.NoResponseException;
 
 @Component
 public class MinioComponent implements OssComponent {
-	@Value("${bucket.name}")
+	@Value("${oss.minio.bucket.name}")
 	public String bucketName;
 
 	@Autowired

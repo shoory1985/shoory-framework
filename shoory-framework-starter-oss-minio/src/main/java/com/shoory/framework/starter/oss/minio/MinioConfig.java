@@ -1,4 +1,4 @@
-package com.shoory.framework.starter.qcos;
+package com.shoory.framework.starter.oss.minio;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -11,20 +11,20 @@ import io.minio.errors.InvalidPortException;
 
 @Configuration
 public class MinioConfig {
-	@Value("${bucket.secretId}")
-	public String secretId;
-	@Value("${bucket.secretKey}")
+	@Value("${oss.minio.bucket.accessKey}")
+	public String accessKey;
+	@Value("${oss.minio.bucket.secretKey}")
 	public String secretKey;
-	@Value("${bucket.region}")
+	@Value("${oss.minio.bucket.region}")
 	public String region;
+	@Value("${oss.minio.bucket.port}")
+	public int port;
 	
 
 	@Bean
 	MinioClient getMinioClient() {
 		try {
-			return new MinioClient(this.region, 9000,
-					this.secretKey,
-					this.secretId);
+			return new MinioClient(this.region, this.port, this.accessKey, this.secretKey);
 		} catch (InvalidEndpointException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
