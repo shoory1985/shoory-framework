@@ -1,6 +1,8 @@
 package com.shoory.framework.starter.oss.aliyun;
 
 import java.io.InputStream;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -52,5 +54,13 @@ public class AliyunCOSComponent implements OssComponent {
 	public boolean isExisted(String resourcePath) {
 		// TODO Auto-generated method stub
 		return ossClient.doesObjectExist(new GetObjectRequest(configProperties.getBucketName(), resourcePath));
+	}
+
+	@Override
+	public List<String> list(String path) {
+		return ossClient.listObjects(configProperties.getBucketName(), path).getObjectSummaries()
+				.stream()
+				.map(r -> r.getKey())
+				.collect(Collectors.toList());
 	}
 }

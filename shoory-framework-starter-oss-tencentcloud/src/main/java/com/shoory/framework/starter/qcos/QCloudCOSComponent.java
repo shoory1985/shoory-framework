@@ -5,7 +5,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,6 +92,13 @@ public class QCloudCOSComponent implements OssComponent {
 	public boolean isExisted(String resourcePath) {
 		// TODO Auto-generated method stub
 		return cosClient.getObject(this.bucketName, resourcePath) != null;
+	}
+
+	@Override
+	public List<String> list(String path) {
+		return cosClient.listObjects(this.bucketName, path).getObjectSummaries().stream()
+				.map(r -> r.getKey())
+				.collect(Collectors.toList());
 	}
 
 }
