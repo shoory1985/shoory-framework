@@ -7,7 +7,10 @@ import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,6 +101,20 @@ public class MinioComponent implements OssComponent {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	@Override
+	public List<String> list(String path) {
+		return StreamSupport.stream(client.listObjects(this.bucketName, path, false).spliterator(), false)
+				.map(result -> {
+					try {
+						return result.get().objectName();
+					} catch (Throwable e) {
+						e.printStackTrace();
+						return null;
+					}
+				})
+				.collect(Collectors.toList());
 	}
 
 }
