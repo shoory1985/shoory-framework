@@ -88,18 +88,20 @@ public class SnowflakeIdGenerator implements Configurable, IdentifierGenerator {
         //            String.format("Clock moved backwards.  Refusing to generate id for %d milliseconds", lastTimestamp - timestamp));
         //}
 
-        //如果是同一时间生成的，则进行毫秒内序列
-        if (lastTimestamp == timestamp) {
-            sequence = (sequence + 1) & MAX_SEQUENCE;
-            //毫秒内序列溢出
-            if (sequence == 0) {
-                //阻塞到下一个毫秒,获得新的时间戳
-                timestamp = tilNextMillis(lastTimestamp);
+        synchronized (this) {
+            //如果是同一时间生成的，则进行毫秒内序列
+            if (lastTimestamp == timestamp) {
+                sequence = (sequence + 1) & MAX_SEQUENCE;
+                //毫秒内序列溢出
+                if (sequence == 0) {
+                    //阻塞到下一个毫秒,获得新的时间戳
+                    timestamp = tilNextMillis(lastTimestamp);
+                }
             }
-        }
-        //时间戳改变，毫秒内序列重置
-        else {
-            sequence = 0L;
+            //时间戳改变，毫秒内序列重置
+            else {
+                sequence = 0L;
+            }
         }
 
         //上次生成ID的时间截
