@@ -104,8 +104,8 @@ public class DateUtils {
 	 * @return
 	 */
 	public Date getMonthBegin(int adjustMonth) {
-		SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd");
 		TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
+		SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd");
 		Calendar cal = Calendar.getInstance();// 获取当前日期
 		cal.add(Calendar.MONTH, adjustMonth);
 		cal.set(Calendar.DAY_OF_MONTH, 1);// 设置为1号,当前日期既为本月第一天
@@ -115,8 +115,6 @@ public class DateUtils {
 	}
 
 	/**
-	 * 获取月份的1号零点
-	 * @param adjustMonth ... -1（上月）、0（本月）、1（下月） ...
 	 * @return
 	 */
 	public Date getDiffDate(int n) {
@@ -188,11 +186,11 @@ public class DateUtils {
 	 * @return
 	 */
 	public String getDateBefore(int days) {
-		SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd");
-		sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+		TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
 		Calendar cal = Calendar.getInstance();// 获取当前日期
 		long time = cal.getTimeInMillis()- days * 24 * 60 * 60 * 1000; //得到days天前的时间戳
 		cal.setTimeInMillis(time);
+		SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd");
 		String  date = sdf.format(cal.getTime());  
 		return date;
 	}
@@ -201,11 +199,11 @@ public class DateUtils {
 	 * @return
 	 */
 	public String formatWithTimeZone(String pattern, long time, int timezone) {
-		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-		sdf.setTimeZone(TimeZone.getTimeZone("GMT" + (timezone >= 0 ? "+" + timezone : timezone)));
+		TimeZone.setDefault(TimeZone.getTimeZone("GMT" + (timezone >= 0 ? "+" + timezone : timezone)));
 		Calendar cal = Calendar.getInstance();// 获取当前日期
 		cal.setTimeInMillis(time);
-		String  date = sdf.format(cal.getTime());  
+		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+		String date = sdf.format(cal.getTime());
 		return date;
 	}
 }
