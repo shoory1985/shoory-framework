@@ -2,6 +2,8 @@ package com.shoory.framework.starter.oss.fs;
 
 import com.shoory.framework.starter.oss.OssComponent;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +18,7 @@ public class FsComponent implements OssComponent {
 	@Value("${oss.fs.basePath}")
 	public String basePath;
 
-
+	private static final Logger logger = LoggerFactory.getLogger(FsComponent.class);
 	@Override
 	public String upload(String resourcePath, String mimeType, InputStream is) {
 		try {
@@ -43,6 +45,8 @@ public class FsComponent implements OssComponent {
 			}
 
 			//写入文件
+
+			logger.info("文件写入" + realPath);
 			FileOutputStream os = new FileOutputStream(realPath);
 			byte[] b = new byte[4096];
 			int len = 0;
@@ -67,6 +71,7 @@ public class FsComponent implements OssComponent {
 	@Override
 	public InputStream download(String resourcePath) {
 		try {
+			logger.info("文件读取" + basePath + resourcePath);
 			File file = new File(basePath + resourcePath);
 
 			return file.exists() ? new FileInputStream(file) : null;
