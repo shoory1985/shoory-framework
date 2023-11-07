@@ -16,12 +16,14 @@ public class FsComponent implements OssComponent {
 	@Value("${oss.fs.basePath}")
 	public String basePath;
 
-	public String upload(String prefix, String path, String mimeType, InputStream is) {
+
+	@Override
+	public String upload(String resourcePath, String mimeType, InputStream is) {
 		try {
 			//检查/创建文件夹
-			String realPath = this.basePath + prefix;
+			String realPath = this.basePath;
 			{
-				String[] pieces = path.split("/");	//切割
+				String[] pieces = resourcePath.split("/");	//切割
 				for (int i = 0; i < pieces.length; i++) {
 					if (StringUtils.isNotBlank(pieces[i])) {
 						realPath += pieces[i];
@@ -55,16 +57,17 @@ public class FsComponent implements OssComponent {
 			file.setWritable(true);
 			file.setReadable(true);
 
-			return path;
+			return resourcePath;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "";
 		}
 	}
 
-	public InputStream download(String prefix, String path) {
+	@Override
+	public InputStream download(String resourcePath) {
 		try {
-			File file = new File(basePath + prefix + "/" + path);
+			File file = new File(basePath + resourcePath);
 
 			return file.exists() ? new FileInputStream(file) : null;
 		} catch (Throwable e) {
@@ -74,10 +77,11 @@ public class FsComponent implements OssComponent {
 		return null;
 	}
 
-	public void delete(String prefix, String path) {
+	@Override
+	public void delete(String resourcePath) {
 		// 指定要删除的 bucket 和对象键
 		try {
-			File file = new File(basePath + prefix + "/" + path);
+			File file = new File(basePath + resourcePath);
 			if (file.exists()) {
 				file.delete();
 			}
@@ -88,10 +92,11 @@ public class FsComponent implements OssComponent {
 	}
 
 	@Override
-	public boolean isExisted(String prefix, String path) {
+	public boolean isExisted(String resourcePath) {
+
 		// TODO Auto-generated method stub
 		try {
-			File file = new File(basePath + prefix + "/" + path);
+			File file = new File(basePath + resourcePath);
 			return file.exists();
 		} catch (Throwable e) {
 		}
@@ -99,13 +104,12 @@ public class FsComponent implements OssComponent {
 	}
 
 	@Override
-	public List<String> listFiles(String prefix, String dirPath) {
+	public List<String> list(String path) {
 		try {
-			File file = new File(basePath + prefix + "/" + dirPath);
+			File file = new File(basePath + path);
 			return Arrays.stream(file.list()).collect(Collectors.toList());
 		} catch (Throwable e) {
 		}
 		return new ArrayList<>();
 	}
-
 }
