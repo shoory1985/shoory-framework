@@ -14,7 +14,7 @@
 
 	<modules>
 		<module>shoory-framework-starter-api</module>
-		<module>shoory-framework-starter-captcha</module>
+<!--		<module>shoory-framework-starter-captcha</module>-->
 		<module>shoory-framework-starter-db</module>
 		<module>shoory-framework-starter-oss</module>
 		<module>shoory-framework-starter-oss-tencentcloud</module>
