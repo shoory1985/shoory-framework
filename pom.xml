@@ -18,7 +18,7 @@
 		<module>shoory-framework-starter-db</module>
 		<module>shoory-framework-starter-oss</module>
 		<module>shoory-framework-starter-oss-tencentcloud</module>
-		<module>shoory-framework-starter-oss-aliyun</module>
+<!--		<module>shoory-framework-starter-oss-aliyun</module>-->
 		<module>shoory-framework-starter-oss-minio</module>
 		<module>shoory-framework-starter-oss-fs</module>
 		<module>shoory-framework-starter-redis</module>
